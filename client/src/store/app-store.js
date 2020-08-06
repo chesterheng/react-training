@@ -1,4 +1,5 @@
 import { applyMiddleware, createStore, combineReducers, compose } from "redux";
+import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import rulesReducer from "../reducers/rules-reducer";
 
@@ -11,7 +12,7 @@ const store = createStore(
   rootReducer,
   undefined,
   compose(
-    applyMiddleware(logger),
+    applyMiddleware(thunk, logger),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
