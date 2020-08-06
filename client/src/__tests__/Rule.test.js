@@ -1,8 +1,9 @@
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import Rule from "../Rule";
 import rules from "../data.json";
+import renderWithRedux from "../renderWithRedux";
 
 describe("Rule", () => {
   let rule;
@@ -11,7 +12,11 @@ describe("Rule", () => {
 
   beforeEach(() => {
     rule = rules[0];
-    ({ getByText, getByTitle } = render(<Rule rule={rule} />));
+    ({ getByText, getByTitle } = renderWithRedux(<Rule rule={rule} />, {
+      initialState: {
+        rules
+      }
+    }));
   });
 
   test("should render rule title", () => {

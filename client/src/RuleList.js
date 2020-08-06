@@ -10,6 +10,7 @@ const RuleList = () => {
 
   useEffect(() => {
     dispatch(loadRules());
+    // eslint-disable-next-line
   }, []);
 
   const rules = useSelector(state => state.rules)
