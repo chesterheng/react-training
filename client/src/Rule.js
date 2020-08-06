@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import LikeBtn from "./LikeBtn";
 import "./Rule.css";
 
 const Rule = ({ rule: { title, description, likes, dislikes, tags } }) => {
-  const newTags = (tags || []).map(tag => (
+  const newTags = tags.map(tag => (
     <span key={tag} className="badge">
       {tag}
     </span>
@@ -37,4 +38,25 @@ const Rule = ({ rule: { title, description, likes, dislikes, tags } }) => {
     </div>
   );
 };
+
+Rule.defaultProps = {
+  rule: {
+    title: "",
+    description: "",
+    likes: 0,
+    dislikes: 0,
+    tags: []
+  }
+};
+
+Rule.propTypes = {
+  rule: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    likes: PropTypes.number,
+    dislikes: PropTypes.number,
+    tags: PropTypes.arrayOf(PropTypes.string)
+  }).isRequired
+};
+
 export default Rule;

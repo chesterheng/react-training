@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 const LikeBtn = ({ type, counter: initialCount }) => {
   const [counter, setCounter] = useState(initialCount);
@@ -11,6 +12,15 @@ const LikeBtn = ({ type, counter: initialCount }) => {
       {counter} <i className={`glyphicon glyphicon-thumbs-${type}`}></i>
     </button>
   );
+};
+
+LikeBtn.defaultProps = {
+  counter: 0
+};
+
+LikeBtn.propTypes = {
+  type: PropTypes.oneOf(["up", "down"]).isRequired,
+  counter: PropTypes.number
 };
 
 export default LikeBtn;
