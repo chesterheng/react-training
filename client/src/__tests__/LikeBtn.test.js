@@ -1,12 +1,12 @@
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, wait } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import LikeBtn from "../LikeBtn";
 import renderWithRedux from "../renderWithRedux";
 import rules from "../data.json";
 
 describe("LikeBtn", () => {
-  test("should increment counter up", () => {
+  test("should increment counter up", async () => {
     const { getByTitle } = renderWithRedux(<LikeBtn type={"up"} ruleID={1} />, {
       initialState: {
         rules
@@ -16,10 +16,13 @@ describe("LikeBtn", () => {
 
     expect(likeButtonElement).toHaveTextContent("0");
     fireEvent.click(likeButtonElement);
-    expect(likeButtonElement).toHaveTextContent("1");
+  
+    await wait (() => {
+      expect(likeButtonElement).toHaveTextContent("1");
+    });
   });
 
-  test("should increment counter down", () => {
+  test("should increment counter down", async () => {
     const { getByTitle } = renderWithRedux(<LikeBtn type={"down"} ruleID={1} />, {
       initialState: {
         rules
@@ -29,7 +32,10 @@ describe("LikeBtn", () => {
 
     expect(likeButtonElement).toHaveTextContent("0");
     fireEvent.click(likeButtonElement);
-    expect(likeButtonElement).toHaveTextContent("1");
+
+    await wait (() => {
+      expect(likeButtonElement).toHaveTextContent("1");
+    })
   });
 
 });

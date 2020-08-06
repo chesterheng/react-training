@@ -1,23 +1,28 @@
+import axios from "axios";
 import { DO_LIKE, DO_DISLIKE, doLike, doDislike } from "../likes-actions";
 
+jest.mock('axios');
+
 describe("Likes Actions", () => {
-  test("should post like", () => {
+  test("should post like", async () => {
+    const id = 5;
     const expectedAction = {
       type: DO_LIKE,
-      payload: 5
+      payload: id
     };
-    const action = doLike(5);
-
-    expect(action).toEqual(expectedAction);
+    const dispatch = jest.fn();
+    await doLike(id)(dispatch);
+    expect(dispatch).toBeCalledWith(expectedAction);
   });
 
-  test("should post dislike", () => {
+  test("should post dislike", async () => {
+    const id = 15;
     const expectedAction = {
       type: DO_DISLIKE,
-      payload: 15
+      payload: id
     };
-    const action = doDislike(15);
-
-    expect(action).toEqual(expectedAction);
+    const dispatch = jest.fn();
+    await doDislike(id)(dispatch);
+    expect(dispatch).toBeCalledWith(expectedAction);
   });
 });
