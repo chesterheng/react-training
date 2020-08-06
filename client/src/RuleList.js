@@ -1,8 +1,19 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
 import Rule from "./Rule";
+import { loadRules } from "./actions/rules-actions";
 
-const RuleList = ({ rules }) => {
+const RuleList = () => {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(loadRules());
+  }, []);
+
+  const rules = useSelector(state => state.rules)
+
   const newRules = rules.map(rule => (
     <Rule key={rule.id} rule={rule} />
   ));
@@ -10,7 +21,7 @@ const RuleList = ({ rules }) => {
   return <Fragment>{newRules}</Fragment>;
 };
 
-Rule.defaultProps = {
+RuleList.defaultProps = {
   rules: []
 };
 
@@ -22,4 +33,4 @@ RuleList.propTypes = {
   ).isRequired
 };
 
-export default RuleList;
+export default RuleList

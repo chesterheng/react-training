@@ -1,14 +1,18 @@
 import React from "react";
-import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import rules from "../data.json";
 import RuleList from "../RuleList";
+import renderWithRedux from "../renderWithRedux";
 
 describe("Rule List", () => {
   let getByText;
 
   beforeEach(() => {
-    ({ getByText } = render(<RuleList rules={rules} />));
+    ({ getByText } = renderWithRedux(<RuleList rules={rules} />, {
+      initialState: {
+        rules: []
+      }
+    }));
   });
   
   test("should display rules titles", () => {
