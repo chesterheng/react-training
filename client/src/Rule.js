@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Rule.css";
 
 const Rule = ({ rule: { title, description, likes, dislikes, tags } }) => {
@@ -7,13 +7,16 @@ const Rule = ({ rule: { title, description, likes, dislikes, tags } }) => {
       {tag}
     </span>
   ));
+  const [folded, setFolded] = useState(!description);
+  const toggleFolded = () => setFolded(!folded);
+  const cssFolded = folded ? "up" : "down";
   return (
     <div className="panel panel-primary">
-      <div className="panel-heading" role="presentation">
+      <div className="panel-heading" role="presentation"  onClick={toggleFolded}>
         {title}
-        <i className="pull-right glyphicon glyphicon-chevron-down"></i>
+        <i className={`pull-right glyphicon glyphicon-chevron-${cssFolded}`}></i>
       </div>
-      <div className="panel-body">
+      <div className={`panel-body ${folded ? "hidden" : ""}`}>
         <p>{description}</p>
       </div>
       <div className="panel-footer">
