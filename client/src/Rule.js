@@ -1,4 +1,5 @@
 import React from "react";
+import "./Rule.css";
 
 const Rule = ({ rule: { title, description, likes, dislikes, tags } }) => {
   const newTags = (tags || []).map(tag => (
