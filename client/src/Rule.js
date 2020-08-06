@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import LikeBtn from "./LikeBtn";
 import "./Rule.css";
 
 const Rule = ({ rule: { title, description, likes, dislikes, tags } }) => {
@@ -28,12 +29,8 @@ const Rule = ({ rule: { title, description, likes, dislikes, tags } }) => {
             </button>
           </div>
           <div className="btn-group btn-group-xs pull-right">
-            <button className="btn btn-default" title="+1">
-              {likes} <i className="glyphicon glyphicon-thumbs-up"></i>
-            </button>
-            <button className="btn btn-default" title="-1">
-              {dislikes} <i className="glyphicon glyphicon-thumbs-down"></i>
-            </button>
+            <LikeBtn type="up" counter={likes} />
+            <LikeBtn type="down" counter={dislikes} />
           </div>
         </div>
       </div>
