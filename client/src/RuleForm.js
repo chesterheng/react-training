@@ -6,8 +6,9 @@ import RuleTitleField from "./RuleTitleField";
 import RuleDescriptionField from "./RuleDescriptionField";
 import { loadRules } from "./actions/rules-actions";
 import isObjectEmpty from "./utils/isObjectEmpty";
+import { addRule, updateRule } from "./actions/rules-actions";
 
-const RuleForm = ({ match }) => {
+const RuleForm = ({ match, history }) => {
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -16,9 +17,9 @@ const RuleForm = ({ match }) => {
   }, []);
 
   const rules = useSelector(state => state.rules);
-  const id = Number(match.params.id);
-  const rule = rules.find(rule => rule.id === id);
-  const { title = "", description = "" } = rule || {};
+  const matchID = Number(match.params.id);
+  const rule = rules.find(rule => rule.id === matchID);
+  const { id = undefined, title = "", description = "" } = rule || {};
   const initialValues = { id, title, description };
   const validationSchema = Yup.object().shape({
     title: Yup.string()
@@ -28,6 +29,12 @@ const RuleForm = ({ match }) => {
       .min(5, "The description must be longer than 5 characters")
       .max(100, "The description must be shorter than 100 characters")
   });
+
+  const handleSubmit = values => {
+    const submitActionCreator = id ? updateRule : addRule;
+    dispatch(submitActionCreator(values, history));
+  };
+
   return (
     <div className="panel panel-primary">
       <div className="panel-heading">
@@ -35,7 +42,7 @@ const RuleForm = ({ match }) => {
       </div>
       <div className="panel-body">
         <Formik
-          onSubmit={values => console.log(values)}
+          onSubmit={handleSubmit}
           initialValues={initialValues}
           validationSchema={validationSchema}
         >
