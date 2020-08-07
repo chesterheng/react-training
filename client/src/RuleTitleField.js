@@ -1,9 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { ErrorMessage } from "formik";
 
-const RuleTitleField = ({ field }) => {
+const RuleTitleField = ({ field, form }) => {
+  const { name } = field;
+  const { touched, errors } = form;
   return (
-    <div className="form-group">
+    <div className={`form-group ${touched[name] && errors[name] ? "has-error" : ""}`}>
       <label className="control-label" htmlFor="rule-title">
         Title
       </label>
@@ -14,6 +17,7 @@ const RuleTitleField = ({ field }) => {
         id="rule-title"
         placeholder="Title"
       />
+      <ErrorMessage component="span" className="help-block" name="title" />
     </div>
   );
 };
