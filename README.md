@@ -8,6 +8,15 @@
 3. [React and JSX setup](#react-and-jsx-setup)
 4. [State](#state)
 5. [Tests](#tests)
+    <details>
+    <summary>Click to view all steps</summary>
+
+    - [React Testing Library](#react-testing-library)
+    - [First test for Rule Component](#first-test-for-rule-component)
+    - [Second test for RuleList Component](#second-test-for-rule-component)
+    - [Fake Click Event](#fake-click-event)
+    </details>
+
 6. [Redux](#redux)
 7. [REST Architecture](#rest-architecture)
 8. [Routing](#routing)
@@ -210,6 +219,164 @@ LikeBtn.propTypes = {
 **[⬆ back to top](#table-of-contents)**
 
 ## **Tests**
+
+### React Testing Library
+- `create-react-app` is not embed React Testing Library by default
+- Install React Testing Library
+```
+npm install --save-dev @testing-library/react @testing-library/jest-dom
+```
+- To start writing tests, create a folder named `__tests__`
+- In this src folder, create a file with the name of the component being tested, eg `Rule.test.js`
+- In the file, import React Testing Library, the component being tested and other relevant libraries
+```javascript
+import { cleanup, render } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
+import Rule from "../Rule";
+```
+**[⬆ back to top](#table-of-contents)**
+
+### First test for Rule component
+- To implement the first test to check a rule is displayed correctly, add rules json import
+```javascript
+import rules from "../data.json";
+```
+- Create a test suite with `describe`
+```javascript
+describe("Rule", () => {
+});
+```
+- Instantiate the component and use the `render` method to render the component in the DOM before each test 
+```javascript
+  let rule;
+  let wrapper;
+
+  beforeEach(() => {
+    rule = rules[0];
+    wrapper = render(<Rule rule={rule} />);
+  });
+```
+- In test suite, create a test case with `test` and a short description
+```javascript
+  test("should render rule title", () => {
+  });
+```
+- Get title element with `getByText`
+```javascript
+    const titleElement = getByText(rule.title);
+```
+- Add assertion to check the component renders rule title
+```javascript
+  expect(titleElement).toBeInTheDocument();
+```
+- Add a cleanup function in test suite
+```javascript
+  afterEach(cleanup);
+```
+- The test suite should look like this
+```javascript
+describe("Rule", () => {
+  let rule;
+  let wrapper;
+
+  beforeEach(() => {
+    rule = rules[0];
+    wrapper = render(<Rule rule={rule} />);
+  });
+
+  afterEach(cleanup);
+
+  test("should render rule title", () => {
+    const titleElement = getByText(rule.title);
+    expect(titleElement).toBeInTheDocument();
+  });
+});
+```
+- Run the tests
+```javascript
+npm test
+```
+**[⬆ back to top](#table-of-contents)**
+
+### Second test for RuleList component
+- Create a new file for RuleList tests and import relevant dependencies
+- Add a new test suite for RuleList with `describe`
+```javascript
+describe("Rule List", () => {
+}); 
+```
+- Instantiate the component with `render`
+```javascript
+  let getByText;
+
+  beforeEach(() => {
+    ({ getByText } = render(<RuleList rules={rules} />));
+  });
+```
+- Create a test case with `test` and description of the test
+```javascript
+test("should display rules titles", () => {
+  });
+```
+- Add an assertion to check the component renders all rule titles
+```javascript
+rules.forEach(rule => {
+      const titleElement = getByText(rule.title);
+      expect(titleElement).toBeInTheDocument();
+    });
+```
+- Run the tests
+
+**[⬆ back to top](#table-of-contents)**
+
+### Fake click event
+- Create a new file for LikeBtn tests and import relevant dependencies
+- Besides `render`, import `fireEvent` from React Testing Library
+```javascript
+import { fireEvent, render } from "@testing-library/react";
+```
+- Create a test suite and instantiate the component
+```javascript
+describe("LikeBtn", () => {
+  let getByTitle;
+
+  beforeEach(() => {
+    ({ getByTitle } = render(<LikeBtn type={"up"} counter={0} />));
+  });
+});
+```
+- Create a test case with `test` and description
+```javascript
+test("should increment counter", () => {
+  });
+```
+- Instantiate the component and check the initial counter to be 0
+```javascript
+  const likeButtonElement = getByTitle("+1");
+  expect(likeButtonElement).toHaveTextContent("0");
+```
+- In the test case, use `fireEvent` method to simulate a click on the component
+```javascript
+    fireEvent.click(likeButtonElement);
+```
+- Check that the counter value has been incremented
+```javascript
+    expect(likeButtonElement).toHaveTextContent("1");
+```
+- The final test case should look like this
+```javascript
+test("should increment counter", () => {
+    const likeButtonElement = getByTitle("+1");
+
+    expect(likeButtonElement).toHaveTextContent("0");
+    fireEvent.click(likeButtonElement);
+    expect(likeButtonElement).toHaveTextContent("1");
+  });
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+A full test suite will look like this:
 
 ```javascript
 import React from "react";
