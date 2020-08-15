@@ -13,6 +13,14 @@
     </details>
 3. [React and JSX setup](#react-and-jsx-setup)
 4. [State](#state)
+    <details>
+    <summary>Click to view all steps</summary>
+
+    - [Handle component state](#handle-component-state)
+    - ["likes" feature](#likes-feature)
+    - [Props Validation](#props-validation)
+    </details>
+
 5. [Tests](#tests)
     <details>
     <summary>Click to view all steps</summary>
@@ -220,34 +228,144 @@ const newRules = rules.map(rule => (
 
 ## **State**
 
+### Handle Component State
+- In `Rule.js`, import the useState hook
 ```javascript
-// Using the State Hook
-import React, { useState } from 'react';
+import React, { useState } from "react";
+```
+- Initialize the default component state with useState hook. By default, this property must be false to display the description.
+```javascript
+const [folded, setFolded] = useState(!description); 
+```
+- Display or hide the description using the hidden CSS class depending on the folded value
+```javascript
+<div className={`panel-body ${folded ? "hidden" : ""}`}>
+...
+</div>
+``` 
+- Update CSS class of icon in the title depending on the folded value. The icon should either be glyphicon-chevron-down or glyphicon-chevron-up
+```javascript
+const cssFolded = folded ? "up" : "down";
 
-const Rule = props => {
-  // Declare a new state variable, which we'll call "folded"
-  const [folded, setFolded] = useState(false);
+<i className={`pull-right glyphicon glyphicon-chevron-${cssFolded}`}></i>
+```
+- Create a function which toggles the folded value
+```javascript
+const toggleFolded = () => setFolded(!folded);
+```
+- Call that function to display / hide the description when the user clicks on the title of a rule
+```javascript
+<div className="panel-heading" role="presentation"  onClick={toggleFolded}>
+...
+</div>
+```
+- Check if the application is working well
 
+**[⬆ back to top](#table-of-contents)**
+
+### "likes" feature
+- Create a file named `LikeBtn.js`
+- Create a function `LikeBtn` and export it by default
+- The same button will be used for "like" and "dislike". Button type will be provided as props to generate the appropriate HTML code
+```javascript
+const LikeBtn = ({ type }) => {
+};
+```
+- Initial counter value will be provided as props. 
+```javascript
+const LikeBtn = ({ type, counter: initialCount }) => {
+};
+```
+- Create constant for title depending on button type
+```javascript
+  const title = type === "up" ? "+1" : "-1";
+```
+- Implement return JSX
+```javascript
   return (
-    <div className="panel panel-primary">
-      ...
-      <div className="panel-body" hidden={folded}>
-        ...
-      </div>
-      ...
-    </div>
+    <button className="btn btn-default" title={title}>
+      {initialCount} <i className={`glyphicon glyphicon-thumbs-${type}`}></i>
+    </button>
   );
-}
+```
+- Initialize the default counter state with useState hook.
+```javascript
+const [counter, setCounter] = useState(initialCount);
+```
+- Create a method to increment the counter
+```javascript
+const increment = () => {
+    setCounter(prev => prev + 1);
+};
+```
+- Call increment method when clicking on the button
+```javascript
+<button className="btn btn-default" title={title} onClick={increment}>
+...
+</button>
+```
+- In `Rule` component, import `LikeBtn` component and use it to replace `<button>`
+```javascript
+<div className="btn-group btn-group-xs pull-right">
+  <LikeBtn type="up" counter={likes} />
+  <LikeBtn type="down" counter={likes} />
+</div>
 ```
 
-```javascript
-// Typechecking With PropTypes
-import PropTypes from "prop-types";
+**[⬆ back to top](#table-of-contents)**
 
-const LikeBtn = ({ type, counter }) => {
-  ...
+### Props Validation
+- Install the prop-types module
+- In `RuleList.js`, import prop-types module
+```javascript
+import PropTypes from "prop-types";
+```
+- Attach a propTypes object property
+```javascript
+RuleList.propTypes = {
+};
+```
+- Define a type for each props used in the component
+```javascript
+RuleList.propTypes = {
+  rules: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired
+    })
+  ).isRequired
+};
+```
+- Define defaultProps which will be used unless the parent overrides them 
+```javascript
+RuleList.defaultProps = {
+  rules: []
+};
+```
+- Add propTypes to the other components.
+- In `Rule.js`, it should look like this:
+```javascript
+Rule.defaultProps = {
+  rule: {
+    title: "",
+    description: "",
+    likes: 0,
+    dislikes: 0,
+    tags: []
+  }
 };
 
+Rule.propTypes = {
+  rule: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    likes: PropTypes.number,
+    dislikes: PropTypes.number,
+    tags: PropTypes.arrayOf(PropTypes.string)
+  }).isRequired
+};
+```
+- In `LikeBtn.js` it should look like this:
+```javascript
 LikeBtn.defaultProps = {
   counter: 0
 };
@@ -257,6 +375,8 @@ LikeBtn.propTypes = {
   counter: PropTypes.number
 };
 ```
+
+**[⬆ back to top](#table-of-contents)**
 
 - [Using the State Hook](https://reactjs.org/docs/hooks-state.html)
 - [React Hooks Cheatsheet](https://react-hooks-cheatsheet.surge.sh)
