@@ -24,6 +24,19 @@
     </details>
 
 6. [Redux](#redux)
+    <details>
+    <summary>Click to view all steps</summary>
+
+    - [Load Rules](#load-rules)
+    - [Action Creators](#action-creators)
+    - [Reducer](#reducer)
+    - [Store](#store)
+    - [Update React components](#update-react-components)
+    - [Likes and Dislikes Action Creators](#likes-and-dislikes-action-creators)
+    - [Likes and Dislikes Reducer](#likes-and-dislikes-reducer)
+    - [Likes and Dislikes Update React components](#likes-and-dislikes-update-react-components)
+    </details>
+
 7. [REST Architecture](#rest-architecture)
 8. [Routing](#routing)
 9. [Forms](#forms)
@@ -477,53 +490,170 @@ describe("Rule", () => {
 
 ## **Redux**
 
-### Redux Cycle:
+### Load Rules
+- For the sake of separation of concerns, we will load the rules in a dedicated action instead of importing them in `index.js`
 
-![Redux Cycle](https://github.com/chesterheng/react-training/blob/master/concepts/27-8-19%2C%201_01%20PM%20Office%20Lens.jpeg)
+**[⬆ back to top](#table-of-contents)**
 
-### React Redux:
-
-![React Redux](https://github.com/chesterheng/react-training/blob/master/concepts/IMG_7610.JPG)
-
+### Action Creators
+- Inside the src folder, create a new folder called `actions`
+- Create a file named `rules-actions.js`
+- Import the rules from the `data.json` file
 ```javascript
-// Action creator
-export const RULES_LOADED = "RULES_LOADED";
-export const loadRules = () => {
-  return {
+import rules from "../data.json";
+```
+- Create a function named `loadRules`
+```javascript
+const loadRules = () => {
+};
+```
+- Return an action named `RULES_LOADED` containing the rules
+```javascript
+return {
     type: RULES_LOADED,
     payload: rules
   };
-};
+```
+- Export the function
+```javascript
+export const loadRules = () => {
+...
+}
+```
+- Export the action name as a constant
+```javascript
+export const RULES_LOADED = "RULES_LOADED";
+``` 
+- Bonus: unit test should look something like:
+```javascript
+import rules from "../../data.json";
+import { RULES_LOADED, loadRules } from "../rules-actions";
+
+describe("Rules Actions", () => {
+  test("should load rules", () => {
+    const expectedAction = {
+      type: RULES_LOADED,
+      payload: rules
+    };
+    const action = loadRules();
+
+    expect(action).toEqual(expectedAction);
+  });
+});
 ```
 
-```javascript
-// Reducer
-import { RULES_LOADED } from "../actions/rules-actions";
+**[⬆ back to top](#table-of-contents)**
 
+### Reducer
+- Inside the src folder, create a folder named `reducers`
+- Create a file named `rules-reducer.js`
+- Import action name from rules-action
+```javascript
+import { RULES_LOADED } from "../actions/rules-actions";
+```
+- Create a rulesReducer function state as first parameter (initialized by default with [] ) and an action as second parameter
+```javascript
 const rulesReducer = (state = [], action) => {
-  switch (action.type) {
+  ...
+};
+```
+- Write a switch statement and return state by default
+```javascript
+switch (action.type) {
+    default:
+      return state;
+}
+```
+- Handle the RULES_LOADED action by saving the rules from the RULES_LOADED action into the state
+```javascript
+switch (action.type) {
     case RULES_LOADED: {
       return action.payload;
     }
-    default:
-      return state;
-  }
-};
+    ...
+}
+```
+- Export the reducer
+```javascript
+export default rulesReducer; 
+```
+- Bonus: unit test should look something like:
+```javascript
+import rules from "../../data.json";
+import reducer from "../rules-reducer";
+import { RULES_LOADED } from "../../actions/rules-actions";
 
-export default rulesReducer;
+describe("Rules reducer", () => {
+  test("should return the initial state", () => {
+    const action = {};
+    const previousState = undefined;
+    const expectedNewState = [];
+    const newState = reducer(previousState, action);
+
+    expect(newState).toEqual(expectedNewState);
+  });
+
+  test("should load rules", () => {
+    const action = {
+      type: RULES_LOADED,
+      payload: rules
+    };
+    const previousState = [];
+    const expectedNewState = rules;
+    const newState = reducer(previousState, action);
+
+    expect(newState).toEqual(expectedNewState);
+  });
+}); 
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
+### Store
+- Inside the src folder, create a folder named `store`
+- Create a file named `app-store.js` 
+- Create a future-proof global reducer using combineReducers
 ```javascript
-// Store
-import { applyMiddleware, createStore, combineReducers, compose } from "redux";
-import { createLogger } from "redux-logger";
+import { combineReducers } from "redux";
 import rulesReducer from "../reducers/rules-reducer";
 
-const logger = createLogger();
 const rootReducer = combineReducers({
   rules: rulesReducer
 });
+```
+- Use createStore from the Redux API to create the store
+```javascript
+import { createStore, combineReducers } from "redux";
+```
+- Give the global reducer as parameter
+```javascript
+const store = createStore(rootReducer);
+```
+- Install `redux-logger`
+- Create a constant using createLogger from redux-logger 
+```javascript
+import { createLogger } from "redux-logger";
 
+const logger = createLogger();
+```
+- Use applyMiddleware and compose from Redux API to set up logger
+```javascript
+import { applyMiddleware, createStore, combineReducers, compose } from "redux";
+
+const store = createStore(
+  rootReducer,
+  undefined,
+  compose(
+    applyMiddleware(logger),
+  )
+);
+```
+- Export store
+```javascript
+export default store; 
+```
+- Bonus: Install the redux-dev-tools chrome extension and enable it in your code
+```javascript
 const store = createStore(
   rootReducer,
   undefined,
@@ -532,35 +662,191 @@ const store = createStore(
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
-export default store;
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
+### Update React Components
+- In `RuleList.js` import `useSelector` and `useDispatch` hooks from react-redux
 ```javascript
-// Connect React components to store
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+```
+- Use `useSelector` to retrieve all rules in the store
+```javascript
+  const rules = useSelector(state => state.rules)
+```
+- Declare a constant with `useDispatch`
+```javascript
+const dispatch = useDispatch()
+```
+- Use `useEffect` from react to dispatch the `loadRules` action
+```javascript
 import { loadRules } from "./actions/rules-actions";
 
-const RuleList = ({ rules, loadRules }) => {
   useEffect(() => {
-    loadRules();
+    dispatch(loadRules());
   }, []);
-  ...
-};
-
-const mapStateToProps = ({ rules }) => ({
-  rules
-});
-
-const mapDispatchToProps = {
-  loadRules
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RuleList);
 ```
+- In `index.js`, provide the store to the application with the Provider component
+```javascript
+import { Provider } from "react-redux";
+import store from "./store/app-store";
+
+const reactElement = (
+  <Provider store={store}>
+    <RuleList />
+  </Provider>
+);
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Likes and Dislikes Action Creators
+- In the actions folder, create a file named `likes-actions.js`
+- Create a function named `doLike`, which accepts one argument, the rule identifier
+```javascript
+const doLike = id => {
+};
+```
+- Return an action named `DO_LIKE` , containing the rule identifier
+```javascript
+return {
+    type: DO_LIKE,
+    payload: rules
+  };
+```
+- Export the function
+```javascript
+export const doLike = () => {
+...
+}
+```
+- Export the action name as a constant
+```javascript
+export const DO_LIKE = "DO_LIKE";
+``` 
+- In the same file, create a function named `doDislike`, just like `doLike`
+- `doDislike` function should look like this:
+```javascript
+export const DO_DISLIKE = "DO_DISLIKE";
+export const doDislike = id => {
+  return {
+    type: DO_DISLIKE,
+    payload: id
+  };
+}; 
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Likes and Dislikes Reducer
+- In `rules-reducer.js`, add a case to handle DO_LIKE
+```javascript
+case DO_LIKE: {
+}
+```
+- Find the rule whose identifier is given to the action
+```javascript
+const index = state.findIndex(rule => rule.id === action.payload);
+```
+- Create a copy of the rule and increment the likes
+```javascript
+  const newRule = {
+      ...state[index]
+    };
+    newRule.likes += 1;
+```
+- Return a copy of the state with `newRule`
+```javascript 
+  const newRules = [...state];
+  newRules[index] = newRule;
+  return newRules;
+```
+- In the same file, handle `DO_DISLIKE`, just like `DO_LIKE`
+- The case should look like this:
+```javascript
+  case DO_DISLIKE: {
+    const index = state.findIndex(rule => rule.id === action.payload);
+    const newRule = {
+      ...state[index]
+    };
+    newRule.dislikes += 1;
+    const newRules = [...state];
+    newRules[index] = newRule;
+    return newRules;
+  }
+```
+**[⬆ back to top](#table-of-contents)**
+
+### Likes and Dislikes Update React Component
+- Refactor `Rule.js` to pass `LikeBtn` rule id
+```javascript
+const Rule = ({ rule: { id, title, description, tags } }) => {
+  ...
+  <LikeBtn type="up" ruleID={id} />
+  <LikeBtn type="down" ruleID={id} />
+  ...
+}
+```
+- In `LikeBtn` component, refactor to accept rule id as props
+```javascript
+const LikeBtn = ({ type, ruleID }) => {
+  ...
+}
+```
+- Provide the rule to `doLike` and `doDislike` functions
+```javascript
+import { doLike, doDislike } from "./actions/likes-actions";
+```
+- Import redux hooks
+```javascript
+import { useSelector, useDispatch } from 'react-redux'
+```
+- Get all rules with `useSelector` and current rule identifier
+``` javascript
+const rules = useSelector(state => state.rules)
+const rule = rules.find(rule => rule.id === ruleID);
+const counter = type === "up" ? rule.likes : rule.dislikes;
+```
+- Update `increment` function to dispatch doLike and doDislike
+```javascript
+const increment = () => { 
+  if (type === "up") dispatch(doLike(ruleID));
+  else dispatch(doDislike(ruleID));
+}
+```
+- LikeBtn with redux should look like:
+```javascript
+const LikeBtn = ({ type, ruleID }) => {
+  const dispatch = useDispatch()
+  const isUp = () => type === "up";
+  const increment = () => {
+    if (isUp()) dispatch(doLike(ruleID));
+    else dispatch(doDislike(ruleID));
+  };
+  const title = type === "up" ? "+1" : "-1";
+  const rules = useSelector(state => state.rules)
+  const rule = rules.find(rule => rule.id === ruleID);
+  const counter = isUp() ? rule.likes : rule.dislikes;
+  
+  return (
+    <button className="btn btn-default" title={title} onClick={increment}>
+      {counter} <i className={`glyphicon glyphicon-thumbs-${type}`}></i>
+    </button>
+  );
+};
+```
+- Check that application works well
+
+**[⬆ back to top](#table-of-contents)**
+
+### Redux Cycle:
+
+![Redux Cycle](https://github.com/chesterheng/react-training/blob/master/concepts/27-8-19%2C%201_01%20PM%20Office%20Lens.jpeg)
+
+### React Redux:
+
+![React Redux](https://github.com/chesterheng/react-training/blob/master/concepts/IMG_7610.JPG)
 
 ```javascript
 // Array-based state
