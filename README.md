@@ -25,6 +25,16 @@
 
 6. [Redux](#redux)
 7. [REST Architecture](#rest-architecture)
+    <details>
+    <summary>Click to view all steps</summary>
+
+    - [REST Overview](#rest-overview)
+    - [Dependencies](#dependencies)
+    - [Fetch Data](#fetch-data)
+    - [Handle Likes & Dislikes](#handle-lkes-&-dislikes)
+    - [Bonus - Unit Tests](#bonus-unit-tests)
+
+    </details>
 8. [Routing](#routing)
 9. [Forms](#forms)
 10. [Performance Optimization Techniques](#performance-optimization-techniques)
@@ -632,32 +642,170 @@ const rulesReducer = (state={}, action) => {
 
 ## **REST Architecture**
 
+### REST Overview
+- The server provides a REST API with the following endpoints:
+  - GET /rest/rules : Get all the rules.
+  - GET /rest/rules/:id : Get the rule with the id specified in the URL. 
+  - POST /rest/rules : Create a new rule.
+  - PUT /rest/rules/:id : Update rule with the id specified in the UR
+- In order to increment "likes" and "dislikes", the server also provides the following endpoints:
+  - POST /rest/rules/:id/likes : Increment "likes" number for the rule identified with the id in the URL.
+  - POST /rest/rules/:id/dislikes : Increment "dislikes" number for the rule identified with the id in the URL.
+- To start the server, open a new terminal and run the following command:
+```javascript
+cd server
+npm install
+npm start
+```
+- To proxify requests to a particular host and prevent cross-origin (CORS) errors when calling the backend, install `http-proxy-middleware`
+```javascript
+npm install http-proxy-middleware --save-dev
+```
+- Create a file named `setupProxy.js` at the root of the src folder
+- Fill this file with the following content
+```javascript
+const proxy = require("http-proxy-middleware");
+
+module.exports = function(app) { 
+  app.use(
+    proxy("/rest", {
+      target: "http://localhost:4000/"
+    }) 
+  );
+};
+```
+- Restart `create-react-app`
+- Test that `http://localhost:3000/rest/rules` and `http://localhost:4000/rest/rules` return the same thing
+
+**[⬆ back to top](#table-of-contents)**
+
+### Dependencies
+- Install `redux-thunk` to handle asynchronous actions
+```javascript
+npm install redux-thunk
+```
+- Configure it when creating the store
+```javascript
+import thunk from "redux-thunk";
+...
+compose(
+  applyMiddleware(thunk, logger),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+...
+```
+- Install `axios`
+```javascript
+npm install axios
+``` 
+
+**[⬆ back to top](#table-of-contents)**
+
+### Fetch Data
+- To display rules to users, we will not import the rules from a JS file anymore, we will call the REST API instead
+- In  `rules-action.js`, replace import of `data.json` with `axios`
+```javascript
+import axios from "axios";
+```
+- In `loadRules`, add a try / catch block
+```javascript
+try {
+  ...
+} catch (error) {
+  ...
+}
+```
+- In try block, use axios to call `/rest/rules` URL
+```javascript
+try {
+  const { data: rules } = await axios.get("/rest/rules");
+}
+```
+- Dispatch a `RULES_LOADED` action once data received
+```javascript
+try {
+  ...
+  dispatch({
+	    type: RULES_LOADED,
+      payload: rules
+    })
+}
+```
+- The function must return a function in order to dispatch the action manually thanks to redux-thunk
+```javascript
+export const loadRules = () => async dispatch => {
+  try {
+    const { data: rules } = await axios.get("/rest/rules");
+    dispatch({
+      type: RULES_LOADED,
+      payload: rules
+    })
+  } 
+  ...
+};
+```
+- Handle errors from the catch block by logging the error
+```javascript
+  catch (error) {
+    console.log(error);
+  }
+```
+- Check that the application is working well
+
+**[⬆ back to top](#table-of-contents)**
+
+### Handle Likes & Dislikes
+- In `likes-actions.js`, import axios
+- In `doLike` function, use axios to call `/rest/rules/:id/likes` URL in a try block
+```javascript
+try {
+  await axios.post(`/rest/rules/${id}/likes`)
+}
+```
+- Dispatch `DO_LIKE` action once data received
+```javascript
+  dispatch({
+    type: DO_LIKE,
+    payload: id
+  })
+```
+- The function must return a function in order to dispatch the action manually thanks to redux-thunk
+```javascript
+export const doLike = id => async dispatch => {
+  try {
+    ...
+  } catch (error) {
+    ...
+  }
+};
+```
+- Handle errors from the catch block by logging the error
+```javascript
+  catch (error) {
+    console.log(error);
+  }
+```
+- Update `doUnlike` function, like `doLike`. It should look like this:
+```javascript
+export const doDislike = id => async dispatch => {
+  try {
+    await axios.post(`/rest/rules/${id}/dislikes`);
+    dispatch({
+      type: DO_DISLIKE,
+      payload: id
+    })
+  } catch (error) {
+    console.log(error);
+  }
+};
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+
 ### Update Backend DB and Frontend Redux Store:
 
 ![Update Backend DB and Frontend Redux Store](https://github.com/chesterheng/react-training/blob/master/concepts/IMG_7614.JPG)
-
-```javascript
-// Store
-import { applyMiddleware, createStore, combineReducers, compose } from "redux";
-import { createLogger } from "redux-logger";
-import thunk from "redux-thunk";
-import rulesReducer from "../reducers/rules-reducer";
-
-const logger = createLogger();
-const rootReducer = combineReducers({
-  rules: rulesReducer
-});
-
-const store = createStore(
-  rootReducer,
-  undefined,
-  compose(
-    applyMiddleware(thunk, logger),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
-export default store;
-```
 
 ```javascript
 // Async action creator
