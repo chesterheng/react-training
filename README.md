@@ -27,6 +27,15 @@
 7. [REST Architecture](#rest-architecture)
 8. [Routing](#routing)
 9. [Forms](#forms)
+    <details>
+    <summary>Click to view all steps</summary>
+
+    - [Formik](#formik)
+    - [Form Binding](#form-binding)
+    - [Form Validation](#form-validation)
+    - [Submission](#submission)
+    
+    </details>
 10. [Performance Optimization Techniques](#performance-optimization-techniques)
 11. [Reference](#reference)
 
@@ -792,6 +801,284 @@ export default Layout;
 **[⬆ back to top](#table-of-contents)**
 
 ## **Forms**
+
+### Formik
+- Install formik library
+```javascript
+npm install formik
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### Form Binding
+- Import the Formik components in the `RuleForm.js` file
+```javascript
+import { Formik, Form, Field } from "formik";
+```
+- Wrap the <form> element using Formik component
+```javascript
+<Formik onSubmit={values => console.log(values)}>
+   <form>
+    <RuleTitleField title={title} />	  
+    <RuleDescriptionField description={description} />
+    ...
+   </form> 
+</Formik>
+```
+- Replace <form> element with Formik <Form>
+```javascript
+<Formik
+  onSubmit={values => console.log(values)}
+>
+  {props => {
+    return (
+      <Form>
+        <RuleTitleField title={title} />	  
+        <RuleDescriptionField description={description} />
+        ...
+      </Form>
+    )
+  }}
+</Formik>
+```
+- Use the Formik `Field` component, this component needs 2 properties - `name` that has to matches the key in the rule object and `component` that renders the whole field
+```javascript
+<Form>
+  <Field name="title" component={RuleTitleField} /> 
+  <Field name="description" component={RuleDescriptionField} />
+  ...
+</Form>
+```
+- Declare `initialValues` required to prefill the fields for edit
+```javascript
+const initialValues = { id, title, description };
+```
+- In the Formik component, add a property `initialValues` with intialValues we just created
+```javascript
+<Formik
+  onSubmit={values => console.log(values)}
+  initialValues={initialValues}
+>
+...
+</Formik>
+```
+- In `RuleTitleField`, update props to receive field props from Formik
+```javascript
+const RuleTitleField = ({ field }) => {
+  return (
+    ...
+      <input
+        {...field}
+        type="text"
+        className="form-control"
+        id="rule-title"
+        placeholder="Title"
+      />
+    ...
+  );
+};
+```
+- Do the same for `RuleDescriptionField`
+- Check that the form fields are prefilled when editing a rule
+
+**[⬆ back to top](#table-of-contents)**
+
+### Form Validation
+- Validation rules:
+  - Title:
+    - Mandatory
+    - Up to 50 characters
+  - Description:
+    - Optional
+    - If filled: At least 5 characters
+    - Up to 100 characters
+- Formik component accepts a `validationSchema` property that works with Yup.
+- Install Yup
+```javascript
+npm install yup
+```
+- In `RuleForm.js`, create a `validationSchema` with a Yup object with the validation rules and error message
+```javascript
+import * as Yup from "yup";
+
+const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .max(50)
+      .required(),
+    description: Yup.string()
+      .min(5)
+      .max(100)
+  });
+```
+- In the Formik component, add a property `validationSchema`
+```javascript
+<Formik
+  onSubmit={values => console.log(values)}
+  initialValues={initialValues}
+  validationSchema={validationSchema}
+>
+...
+</Formik>
+```
+- Add custom error messages in `validationSchema`
+```javascript
+const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .max(50, "The title must be shorter than 50 characters")
+      .required("Title is required"),
+    description: Yup.string()
+      .min(5, "The description must be longer than 5 characters")
+      .max(100, "The description must be shorter than 100 characters")
+  });
+```
+- In `RuleTitleField`, use the `ErrorMessage` component from Formik to display an error message
+```javascript
+import { ErrorMessage } from "formik";
+...
+<ErrorMessage component="span" className="help-block" name="title" />
+```
+- Add the class `has-error` if there's a validation error
+```javascript
+const RuleTitleField = ({ field, form }) => {
+  const { name } = field;
+  const { touched, errors } = form;
+  return (
+    <div className={`form-group ${touched[name] && errors[name] ? "has-error" : ""}`}>
+      ...
+    </div>
+  );
+};
+```
+- Do the same for `RuleDescriptionField`
+- In `RuleForm.js` disable the submit button if there's a validation error
+```javascript
+const isObjectEmpty = obj => !Object.entries(obj).length;
+...
+  {({ errors, dirty, isSubmitting }) => (
+        ...
+        <button
+          type="submit"
+          className="btn btn-primary pull-right"
+          disabled={isSubmitting || !isObjectEmpty(errors) || !dirty}
+        >
+          Submit
+        </button>
+    )
+  }
+...
+```
+- Try to trigger the errors to check that the validation is working
+
+**[⬆ back to top](#table-of-contents)**
+
+### Submission
+- In `rules-actions.js`, create an action creator for `addRule` that accepts rule as the first parameter
+```javascript
+export const addRule = (rule) => async dispatch => {
+  ...
+};
+```
+- Add a try / catch block and use axios to post to /rest/rules URL
+```javascript
+try {
+  const response = await axios.post("/rest/rules", rule);
+} catch (error) {
+  console.log(error);
+}
+```
+- Dispatch the response from the server.
+```javascript
+try{
+  ...
+  dispatch({
+    type: RULES_ADDED,
+    payload: response.data
+  });
+}
+```
+- Accept history as a second param and use it to redirect user back to '/' after dispatch
+```javascript
+export const addRule = (rule, history) => async dispatch => {
+  ...
+  catch (error) {
+    console.log(error);
+  }
+  history.push("/");
+};
+```
+- Export the action name as a constant
+```javascript
+export const RULES_ADDED = "RULES_ADDED";
+``` 
+- Create an action creator for `updateRule` like `addRule`
+- It should look like:
+```javascript
+export const RULES_UPDATED = "RULES_UPDATED";
+export const updateRule = (rule, history) => async dispatch => {
+  try {
+    const response = await axios.put(`/rest/rules/${rule.id}`, rule);
+    dispatch({
+      type: RULES_UPDATED,
+      payload: response.data
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  history.push("/");
+}; 	};
+```
+- In `RuleForm.js`, import action creators
+```javascript
+import { addRule, updateRule } from "./actions/rules-actions";
+```
+- Refactor to expose `history` props
+```javascript
+const RuleForm = ({ match, history }) => {
+  ...
+}
+```
+- Create a function `handleSubmit` to dispatch the appropriate action creator
+```javascript
+const handleSubmit = values => {
+  const submitActionCreator = id ? updateRule : addRule;
+  dispatch(submitActionCreator(values, history));
+};
+```
+- Define a `onSubmit` event on the form that call `handleSubmit`
+```javascript
+<Formik
+  onSubmit={handleSubmit}
+  initialValues={initialValues}
+  validationSchema={validationSchema}
+>
+```
+- To handle the resulting actions in the reducer, import `RULES_ADDED` and `RULES_UPDATED`
+```javascript
+import {
+  RULES_LOADED,
+  RULES_ADDED,
+  RULES_UPDATED
+} from "../actions/rules-actions";
+```
+- Add a new case for `RULES_ADDED`, where the created rule must be appended to the current state
+```javascript
+case RULES_ADDED: {
+  return [...state, action.payload];
+}
+```
+- Add a new case for `RULES_UPDATED`, where the updated rule must be replaced in the current state
+```javascript
+case RULES_UPDATED: {
+  const index = state.find(rule => rule.id === action.payload.id);
+  const newRules = [...state];
+  newRules[index] = action.payload;
+  return newRules;
+}
+```
+- Check that both rule creation and edition are working well
+
+**[⬆ back to top](#table-of-contents)**
+
 
 ```javascript
 // React form
