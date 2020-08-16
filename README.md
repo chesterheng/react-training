@@ -4,7 +4,13 @@
 
 0. [Web Development Market Trends](#web-development-market-trends)
 1. [JavaScript](#javascript)
-2. [Tools Setup](#tools-setup)
+2. [Prerequisite](#prerequisite)
+    <details>
+    <summary>Click to view all steps</summary>
+    
+    - [Preparation](#preparation)
+    - [Installation](#installation)
+    </details>
 3. [React and JSX setup](#react-and-jsx-setup)
 4. [State](#state)
 5. [Tests](#tests)
@@ -99,7 +105,50 @@ const employee = {
 
 **[⬆ back to top](#table-of-contents)**
 
-## **Tools Setup**
+## **Prerequisite**
+
+### Preparation
+- Create a folder called `react-training`
+- Unzip `resources.zip` and `server.zip`
+- Move unzipped `resources` and `server` folder into `react-training`
+- `react-training` folder should have this structure
+```
+├── resources
+│ ├── data.json
+│ ├── edition.html
+│ ├── navigation.html
+│ ├── rule.html
+│ └── superagent.js
+└── server
+└── ...
+```
+**[⬆ back to top](#table-of-contents)**
+
+### Installation
+- In `react-training` foler, create a `client` app with `create-react-app`
+```javascript
+npx create-react-app client
+```
+- `react-training` folder should have this structure
+```
+├── resources
+│ ├── data.json
+│ ├── edition.html
+│ ├── navigation.html
+│ ├── rule.html
+│ └── superagent.js
+└── server
+└── client
+```
+- Start app
+```javascript
+cd client
+npm start
+```
+- Open the browser at http://localhost:3000 URL, you should see a welcome message and a spinning React logo.
+- To see the hot-reload in action, open the `App.js` file and change one of the text string, the text is updated in the browser immediately, without manual refresh.
+
+**[⬆ back to top](#table-of-contents)**
 
 - [Node.js](https://nodejs.org/en/)
 - [Visual Studio Code](https://code.visualstudio.com/)
