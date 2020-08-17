@@ -2,7 +2,13 @@
 
 ## Table of Contents
 
-0. [Web Development Market Trends](#web-development-market-trends)
+0. [Introduction](#introduction)
+    <details>
+    <summary>Click to view all steps</summary>
+    
+    - [Zenika Singapore](#zenika-singapore)
+    - [Web Development Market Trends](#web-development-market-trends)
+    </details>
 1. [JavaScript](#javascript)
 2. [Prerequisite](#prerequisite)
     <details>
@@ -22,7 +28,6 @@
     - [Externalize A Component](#externalize-a-component)
     - [Custom CSS](#custom-css)
     </details>
-
 4. [State](#state)
     <details>
     <summary>Click to view all steps</summary>
@@ -31,7 +36,6 @@
     - ["likes" feature](#likes-feature)
     - [Props Validation](#props-validation)
     </details>
-
 5. [Tests](#tests)
     <details>
     <summary>Click to view all steps</summary>
@@ -41,7 +45,6 @@
     - [Second test for RuleList Component](#second-test-for-rule-component)
     - [Fake Click Event](#fake-click-event)
     </details>
-
 6. [Redux](#redux)
     <details>
     <summary>Click to view all steps</summary>
@@ -55,7 +58,6 @@
     - [Likes and Dislikes Reducer](#likes-and-dislikes-reducer)
     - [Likes and Dislikes Update React components](#likes-and-dislikes-update-react-components)
     </details>
-
 7. [REST Architecture](#rest-architecture)
     <details>
     <summary>Click to view all steps</summary>
@@ -77,8 +79,7 @@
     - [Navigate to Rules Modification Page](#navigate-to-rules-modification-page)
     
     </details>
-
-9. [Forms](#forms)
+9.  [Forms](#forms)
     <details>
     <summary>Click to view all steps</summary>
 
@@ -91,7 +92,7 @@
 10. [Performance Optimization Techniques](#performance-optimization-techniques)
 11. [Reference](#reference)
 
-## **Web Development Market Trends**
+## **Introduction**
 
 ### Zenika Academy
 - [Zenika Singapore](https://zenika.sg/)
@@ -101,10 +102,10 @@
 
 ### Web Development Market Trends
 - [Average Front End Developer Salary](https://www.payscale.com/research/SG/Job=Front_End_Developer_%2F_Engineer/Salary)
-- [State of JavaScript 2018](https://2018.stateofjs.com)
-- [State of CSS 2018](https://2019.stateofcss.com/)
-- [2019 HackerRank Developer Skills Report](https://research.hackerrank.com/developer-skills/2019)
-- [Developer Survey Results 2019](https://insights.stackoverflow.com/survey/2019)
+- [State of JavaScript](https://stateofjs.com)
+- [State of CSS](https://2019.stateofcss.com)
+- [HackerRank Developer Skills Report](https://research.hackerrank.com/developer-skills/2020)
+- [Stack Overflow Developer Survey](https://insights.stackoverflow.com/survey/2020)
 
 **[⬆ back to top](#table-of-contents)**
 
