@@ -12,6 +12,17 @@
     - [Installation](#installation)
     </details>
 3. [React and JSX setup](#react-and-jsx-setup)
+    <details>
+    <summary>Click to view all steps</summary>
+
+    - [React Setup](#react-setup)
+    - [Bootstrap Setup](#bootstrap-setup)
+    - [First Components](#first-components)
+    - [Displaying The List](#displaying-the-list)
+    - [Externalize A Component](#externalize-a-component)
+    - [Custom CSS](#custom-css)
+    </details>
+
 4. [State](#state)
     <details>
     <summary>Click to view all steps</summary>
@@ -210,6 +221,33 @@ npm start
 
 ## **React and JSX setup**
 
+### React Setup
+- Open the `src/index.js` file
+- Replace existing `ReactDOM.render`
+```javascript
+const reactElement = React.createElement('div', null, 'Hello World');
+const domElement = document.getElementById('root'); ReactDOM.render(reactElement, domElement);
+```
+- Check that app should now show `Hello World`
+
+**[⬆ back to top](#table-of-contents)**
+
+### Bootstrap Setup
+- Install bootstrap
+```javascript
+npm install bootstrap@3.x.x --save
+```
+- In `index.js` file, import `bootstrap`
+```javascript
+import 'bootstrap/dist/css/bootstrap.css';
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+### First Components
+- HTML code for the first components can be found in `resources/rule.html`
+- When copying HTML code in the return JSX, think about the syntax differences between HTML and JSX (`class` attribute must be replaced by `className`)
+- Different ways of writing a functional component
 ```javascript
 // Function component with no props
 const Rule = () => <div>Rule</div>;
@@ -251,12 +289,185 @@ const Rule = ({ title }) => {
 };
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
+### Displaying The List
+- In src folder, create a file named `RuleList.js`
+- Import React
+```javascript
+import React, { Fragment } from "react";
+```
+- Create a function `RuleList` for this new component
+```javascript
+const RuleList = () => {
+}
+```
+- At the end of the file, export it by default
+```javascript
+export default RuleList; 
+```
+- Implement the return JSX
+```javascript
+const RuleList = () => {
+  return ()
+}
+```
+- The rules to display will be provided as props
+```javascript
+const RuleList = ({ rules }) => {
+  return ()
+}
+```
+- The function must return a root JSX element
+```javascript
+const RuleList = ({ rules }) => {
+  return <Fragment></Fragment>
+}
+```
+- To create a React list from a JavaScript array, use the map function:
 ```javascript
 // Array as children
-const newRules = rules.map(rule => (
+  const newRules = (rules || []).map(rule => {
+    return (
+      <div>{rule.title}</div>
+    );
+  });
+```
+- Deconstruct all values we need from each rule
+```javascript
+const { title, description, likes, dislikes, tags } = rule;
+```
+- In newrules, get list of tags
+```javascript
+    const newTags = (tags || []).map(tag => (
+      <span key={tag} className="badge">
+        {tag}
+      </span>
+    ));
+```
+- Paste the copied HTML from `resources/rule.html` into the return of `newRules`
+```javascript
+    return (
+      <div class="panel panel-primary">
+        <div class="panel-heading" role="presentation">
+          Leave the code cleaner than you found it.
+          <i class="pull-right glyphicon glyphicon-chevron-down" />
+        </div>
+        <div class="panel-body">
+          <p>From Clean Code: always leave the code cleaner than it was before.</p>
+        </div>
+        <div class="panel-footer">
+          <div class="btn-toolbar">
+            <span class="badge">craftsmanship</span>
+            <span class="badge">clean code</span>
+            <div class="btn-group btn-group-xs pull-right">
+              <button class="btn btn-primary" title="Update">
+                <i class="glyphicon glyphicon-pencil" />
+              </button>
+            </div>
+            <div class="btn-group btn-group-xs pull-right">
+              <button class="btn btn-default" title="+1">
+                0 <i class="glyphicon glyphicon-thumbs-up" />
+              </button>
+              <button class="btn btn-default" title="-1">
+                0 <i class="glyphicon glyphicon-thumbs-down" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    );
+```
+- Update HTML to JSX syntax (`class` to `className`)
+- Update HTML to be receive dynamic information
+```javascript
+  return(
+      <div className="panel panel-primary">
+        <div className="panel-heading" role="presentation">
+          {title}
+          <i className="pull-right glyphicon glyphicon-chevron-down"></i>
+        </div>
+        <div className="panel-body">
+          <p>{description}</p>
+        </div>
+        <div className="panel-footer">
+          <div className="btn-toolbar">
+            {newTags}
+            <div className="btn-group btn-group-xs pull-right">
+              <button className="btn btn-primary" title="Update">
+                <i className="glyphicon glyphicon-pencil"></i>
+              </button>
+            </div>
+            <div className="btn-group btn-group-xs pull-right">
+              <button className="btn btn-default" title="+1">
+                {likes} <i className="glyphicon glyphicon-thumbs-up"></i>
+              </button>
+              <button className="btn btn-default" title="-1">
+                {dislikes} <i className="glyphicon glyphicon-thumbs-down"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  )
+```
+- To bootstrap the app, open `src/index.js` and import the new component
+```javascript
+import RuleList from "./RuleList";
+```
+- Provide the rules to display by draging the file `data.json` from the resources directory into src
+- Import `data.json`
+```javascript
+import rules from './data';
+console.log('rules = ', rules);
+```
+- Call ReactDOM.render method to render the element inside the DOM element with the id `root`
+```javascript
+const reactElement = <RuleList rules={rules} />;
+```
+- Check if the application is working well
+
+**[⬆ back to top](#table-of-contents)**
+
+### Externalize a component
+- In src folder, create a file named `Rule.js`
+- In this file, create a function `Rule` and export it by default
+- Implement the return JSX
+- The rule to be displayed will be provided as props
+```javascript
+const Rule = ({ rule: { title, description, likes, dislikes, tags } }) => {
+  ...
+}
+```
+- In `RuleList.js`, import the new `Rule` component
+```javascript
+import Rule from "./Rule";
+```
+- Update return jsx to use new `Rule` component
+```javascript
+const newRules = (rules || []).map(rule => (
   <Rule key={rule.id} rule={rule} />
 ));
 ```
+- Check if the application is working well
+
+**[⬆ back to top](#table-of-contents)**
+
+### Custom CSS
+- Create a `Rule.css` file sibling to `Rule.js`
+- Add a CSS property to display the "hand" cursor when the user moves the mouse over the title panel
+```css
+.panel-heading {
+  cursor: pointer;
+} 
+```
+- Import the CSS file in `Rule.js`
+```javascript
+import "./Rule.css";
+```
+
+**[⬆ back to top](#table-of-contents)**
 
 - [Babel is a JavaScript compiler](https://babeljs.io)
 - [Components and Props](https://reactjs.org/docs/components-and-props.html)
