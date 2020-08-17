@@ -26,6 +26,16 @@
 6. [Redux](#redux)
 7. [REST Architecture](#rest-architecture)
 8. [Routing](#routing)
+    <details>
+    <summary>Click to view all steps</summary>
+
+    - [Setup The Router](#setup-the-router)
+    - [Navigation Bar](#navigation-bar)
+    - [Navigate to Rule Creation Page](#navigate-to-rule-creation-page)
+    - [Navigate to Rules Modification Page](#navigate-to-rules-modification-page)
+    
+    </details>
+
 9. [Forms](#forms)
     <details>
     <summary>Click to view all steps</summary>
@@ -748,53 +758,209 @@ export default connect(
 
 ## **Routing**
 
+### Setup The Router
+- Install the router
 ```javascript
-// Setup Router
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { BrowserRouter, Route } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.css";
-import Layout from "./Layout";
-import store from "./store/app-store";
-
-const reactElement = (
-  <Provider store={store}>
-    <BrowserRouter>
-      <Route path="/" component={Layout} />
-    </BrowserRouter>
-  </Provider>
-);
-const domElement = document.getElementById("root");
-
-ReactDOM.render(reactElement, domElement);
+npm install react-router-dom
 ```
-
+- In `index.js`, import the `BrowserRouter` and `Route` from react-router-dom
 ```javascript
-// Setup Layout
-import React from "react";
-import { Route } from "react-router-dom";
-import Header from "./Header";
-import RuleList from "./RuleList";
-import RuleForm from "./RuleForm";
+import { BrowserRouter, Route } from "react-router-dom";
+```
+- Define a route that will instantiate a `RuleList` on / path.
+```javascript
+<Route path="/" component={RuleList} />
+```
+- Use `BrowserRouter` to wrap all `Routes` components
+```javascript
+<BrowserRouter>
+  <Route path="/" component={RuleList} />
+</BrowserRouter>
+```
+- Check that the application is still working
 
-const Layout = () => {
-  return (
+**[⬆ back to top](#table-of-contents)**
+
+### Navigation Bar
+- To create a navigation bar component, create a file named `Header.js`
+- Create a class named `Header` (default export) and implement render method
+```javascript
+const Header = () => {
+  return ();
+};
+
+export default Header; 
+```
+- Copy <nav> HTML code from `resources/navigation.html` file into the return
+- Be careful with JSX (Change class attributes by className)
+- Import Link component from the react-router-dom library
+```javascript
+import { Link } from "react-router-dom";
+```
+- Replace links (<a> tag) with the Link component
+```javascript
+return (
+    <nav className="navbar navbar-default">
+      <div className="navbar-header">
+        <button type="button" className="navbar-toggle">
+          <span className="sr-only">Toggle navigation</span>
+          <span className="icon-bar" />
+          <span className="icon-bar" />
+          <span className="icon-bar" />
+        </button>
+        <Link to="/" className="navbar-brand brand">
+          Developers rules
+        </Link>
+      </div>
+      <div className="collapse navbar-collapse">
+        <ul className="nav navbar-nav">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/new">New</Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+```
+- To create application layout, create a new file `Layout.js`
+- Create and export a new function called `Layout`
+- `Layout` should display the navigation menu (Header component)
+```javascript
+return (
     <div>
       <Header />
       <div className="container-fluid">
         <div className="container">
-          <Route exact path="/" component={RuleList} />
-          <Route path="/new" component={RuleForm} />
-          <Route path="/edit/:id" component={RuleForm} />
         </div>
       </div>
     </div>
   );
-};
-
-export default Layout;
 ```
+- In `index.js`, change the router configuration to use `Layout` component on / path
+```javascript
+<Route path="/" component={Layout} />
+```
+- Back in `Layout.js`, define a route that match the exact / path and instantiate a RuleList when active
+```javascript
+...
+<div className="container">
+  <Route exact path="/" component={RuleList} />
+</div>
+...
+```
+- Check that the application is working well
+
+**[⬆ back to top](#table-of-contents)**
+
+### Navigate to Rule Creation Page
+- Inside the src folder, create a file named `RuleForm.js`
+- In this file, display the form with the HTML code in `resources/edition.html` file
+- Create a file named `RuleTitleField.js`
+- Externalize the field that displays the title in a component named `RuleTitleField` 
+```javascript
+const RuleTitleField = ({ title }) => {
+  return (
+    <div className="form-group">
+      <label className="control-label" htmlFor="rule-title">
+        Title
+      </label>
+      <input
+        type="text"
+        className="form-control"
+        id="rule-title"
+        placeholder="Title"
+        defaultValue={title}
+      />
+    </div>
+  );
+};
+```
+- Do the same for the description with a component named `RuleDescriptionField`
+- `RuleDescriptionField` should look like:
+```javascript
+const RuleDescriptionField = ({ description}) => {
+  return (
+    <div className="form-group">
+      <label className="control-label" htmlFor="rule-desc">
+        Description
+      </label>
+      <textarea
+        className="form-control"
+        id="rule-desc"
+        placeholder="Description"
+        defaultValue={description}
+      />
+    </div>
+  );
+};
+```
+- In `RuleForm.js`, use `RuleTitleField` and `RuleDescriptionField`
+```javascript
+<form>
+  <RuleTitleField />
+  <RuleDescriptionField />
+  <button type="submit" className="btn btn-primary pull-right">
+    Submit
+  </button>
+</form>
+```
+- In `Layout.js` , add a new route with `/new` path to display the form to add rules
+```javascript
+import RuleForm from "./RuleForm";
+...
+<Route path="/new" component={RuleForm} />
+```
+**[⬆ back to top](#table-of-contents)**
+
+### Navigate to Rules Modification Page
+- In `Layout.js` file, add a new route path for edit. (id is a dynamic value depending on the rule to update)
+```javascript
+<Route path="/edit/:id" component={RuleForm} />
+```
+- Using the `Link` component, update the `Rule` component to navigate to the form by providing the rule identifier
+```javascript
+<Link to={`/edit/${id}`} className="btn btn-primary" title="Update">
+  <i className="glyphicon glyphicon-pencil"></i>
+</Link>
+```
+- Check that the application is working well
+- In `RuleForm.js`, use `match` props to get the id
+```javascript
+const id = Number(match.params.id);
+```
+- Update the panel title, if there's an id param, it should be Edit Rule. Otherwise it should be New Rule
+```javascript
+ <h3 className="panel-title">{id ? "Edit rule" : "New rule"}</h3>
+```
+- Connect component to the redux store and get all rules with `useSelector`
+```javascript
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(loadRules());
+  }, []);
+
+  const rules = useSelector(state => state.rules);
+```
+- Get the rule which corresponds to the id from params
+```javascript
+  const id = Number(match.params.id);
+  const rule = rules.find(rule => rule.id === id);
+```
+- Add a default values if no rule is found
+```javascript
+const { title = "", description = "" } = rule || {};
+```
+- Pass the `title` and `description` property to `RuleTitle` and `RuleDescription`
+```javascript
+<RuleTitleField title={title} />
+<RuleDescriptionField description={description} />
+```
+- Check that the application is working well
+
+**[⬆ back to top](#table-of-contents)**
 
 - [Redux Router](https://reacttraining.com/react-router/web/guides/quick-start)
 
