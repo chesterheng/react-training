@@ -545,17 +545,17 @@ const LikeBtn = ({ type, counter: initialCount }) => {
 ```javascript
   const title = type === "up" ? "+1" : "-1";
 ```
+- Initialize the default counter state with useState hook.
+```javascript
+const [counter, setCounter] = useState(initialCount);
+```
 - Implement return JSX
 ```javascript
   return (
     <button className="btn btn-default" title={title}>
-      {initialCount} <i className={`glyphicon glyphicon-thumbs-${type}`}></i>
+      {counter} <i className={`glyphicon glyphicon-thumbs-${type}`}></i>
     </button>
   );
-```
-- Initialize the default counter state with useState hook.
-```javascript
-const [counter, setCounter] = useState(initialCount);
 ```
 - Create a method to increment the counter
 ```javascript
