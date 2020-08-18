@@ -187,7 +187,18 @@ const employee = {
 **[⬆ back to top](#table-of-contents)**
 
 ### Installation
-- In `react-training` foler, create a `client` app with `create-react-app`
+- Check if node is installed
+```javascript
+node -v
+```
+- If node is not installed, download 12.18.3 LTS from https://nodejs.org/en/
+- Run the installation
+- Check if node is installed successfully
+```javascript
+node -v
+npm -v
+```
+- In `react-training` folder, create a `client` app with `create-react-app`
 ```javascript
 npx create-react-app client
 ```
@@ -534,17 +545,17 @@ const LikeBtn = ({ type, counter: initialCount }) => {
 ```javascript
   const title = type === "up" ? "+1" : "-1";
 ```
+- Initialize the default counter state with useState hook.
+```javascript
+const [counter, setCounter] = useState(initialCount);
+```
 - Implement return JSX
 ```javascript
   return (
     <button className="btn btn-default" title={title}>
-      {initialCount} <i className={`glyphicon glyphicon-thumbs-${type}`}></i>
+      {counter} <i className={`glyphicon glyphicon-thumbs-${type}`}></i>
     </button>
   );
-```
-- Initialize the default counter state with useState hook.
-```javascript
-const [counter, setCounter] = useState(initialCount);
 ```
 - Create a method to increment the counter
 ```javascript
