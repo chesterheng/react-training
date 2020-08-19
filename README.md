@@ -94,7 +94,7 @@
 
 ## **Introduction**
 
-### Zenika Academy
+### Zenika Singapore
 - [Zenika Singapore](https://zenika.sg/)
 - [Zenika Trainings](https://training.zenika.com/en-sg/)
 - [Learning path](https://coggle.it/diagram/XA8dSh9BxgHbBxDZ/t/zenika-academy/9816c61f7aa285c671d5ec48a74cc2f1452afebf4ff5a57083ead6556a7a96f5)
