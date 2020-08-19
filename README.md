@@ -579,7 +579,7 @@ const increment = () => {
 
 **[⬆ back to top](#table-of-contents)**
 
-### Props Validation
+### [Props Validation](https://reactjs.org/docs/typechecking-with-proptypes.html)
 - Install the prop-types module
 - In `RuleList.js`, import prop-types module
 ```javascript
