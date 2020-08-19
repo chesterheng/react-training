@@ -170,6 +170,7 @@ const employee = {
 ## **Prerequisite**
 
 ### Preparation
+
 - Create a folder called `react-training`
 - Unzip `resources.zip` and `server.zip`
 - Move unzipped `resources` and `server` folder into `react-training`
@@ -187,6 +188,14 @@ const employee = {
 **[⬆ back to top](#table-of-contents)**
 
 ### Installation
+
+- Install the following apps
+  - [Node.js](https://nodejs.org/en/)
+  - [Visual Studio Code](https://code.visualstudio.com/)
+  - [VS Code Extension: ES7 React/Redux/GraphQL/React-Native snippets](https://marketplace.visualstudio.com/itemdetails?itemName=dsznajder.es7-react-js-snippets)
+  - [VS Code Extension: Bracket Pair Colorizer](https://marketplace.visualstudio.com/itemdetails?itemName=CoenraadS.bracket-pair-colorizer)
+  - [VS Code Extension: Auto Close Tag](https://marketplace.visualstudio.com/itemdetails?itemName=formulahendry.auto-close-tag)
+
 - Check if node is installed
 ```javascript
 node -v
@@ -198,7 +207,7 @@ node -v
 node -v
 npm -v
 ```
-- In `react-training` folder, create a `client` app with `create-react-app`
+- In `react-training` folder, create a `client` app with [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html)
 ```javascript
 npx create-react-app client
 ```
@@ -208,8 +217,7 @@ npx create-react-app client
 │ ├── data.json
 │ ├── edition.html
 │ ├── navigation.html
-│ ├── rule.html
-│ └── superagent.js
+│ └── rule.html
 └── server
 └── client
 ```
@@ -220,14 +228,6 @@ npm start
 ```
 - Open the browser at http://localhost:3000 URL, you should see a welcome message and a spinning React logo.
 - To see the hot-reload in action, open the `App.js` file and change one of the text string, the text is updated in the browser immediately, without manual refresh.
-
-**[⬆ back to top](#table-of-contents)**
-
-- [Node.js](https://nodejs.org/en/)
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [VS Code Extension: ES7 React/Redux/GraphQL/React-Native snippets](https://marketplace.visualstudio.com/itemdetails?itemName=dsznajder.es7-react-js-snippets)
-- [VS Code Extension: Bracket Pair Colorizer](https://marketplace.visualstudio.com/itemdetails?itemName=CoenraadS.bracket-pair-colorizer)
-- [VS Code Extension: Auto Close Tag](https://marketplace.visualstudio.com/itemdetails?itemName=formulahendry.auto-close-tag)
 
 **[⬆ back to top](#table-of-contents)**
 
