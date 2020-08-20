@@ -1313,13 +1313,15 @@ npm install http-proxy-middleware --save-dev
 - Create a file named `setupProxy.js` at the root of the src folder
 - Fill this file with the following content
 ```javascript
-const proxy = require("http-proxy-middleware");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
-module.exports = function(app) { 
+module.exports = function(app) {
   app.use(
-    proxy("/rest", {
-      target: "http://localhost:4000/"
-    }) 
+    '/rest',
+    createProxyMiddleware({
+      target: 'http://localhost:4000',
+      changeOrigin: true,
+    })
   );
 };
 ```
