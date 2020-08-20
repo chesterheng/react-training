@@ -180,15 +180,13 @@ const employee = {
 │ ├── data.json
 │ ├── edition.html
 │ ├── navigation.html
-│ ├── rule.html
-│ └── superagent.js
+│ └── rule.html
 └── server
 └── ...
 ```
 **[⬆ back to top](#table-of-contents)**
 
 ### Installation
-
 - Install the following apps
   - [Node.js](https://nodejs.org/en/)
   - [Visual Studio Code](https://code.visualstudio.com/)
@@ -208,7 +206,7 @@ node -v
 node -v
 npm -v
 ```
-- In `react-training` folder, create a `client` app with [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html)
+- In `react-training` folder, create a `client` app with `create-react-app`
 ```javascript
 npx create-react-app client
 ```
@@ -229,6 +227,11 @@ npm start
 ```
 - Open the browser at http://localhost:3000 URL, you should see a welcome message and a spinning React logo.
 - To see the hot-reload in action, open the `App.js` file and change one of the text string, the text is updated in the browser immediately, without manual refresh.
+
+### References
+- [Create a New React App](https://reactjs.org/docs/create-a-new-react-app.html)
+- [How to create a new app](https://github.com/facebook/create-react-app#creating-an-app)
+- [How to develop apps bootstrapped with Create React App](https://create-react-app.dev)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -254,6 +257,9 @@ npm install bootstrap@3.x.x --save
 ```javascript
 import 'bootstrap/dist/css/bootstrap.css';
 ```
+
+### References 
+- [React Bootstrap](https://react-bootstrap.github.io)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -302,6 +308,10 @@ const Rule = ({ title }) => {
 };
 ```
 
+### References
+- [Components and Props](https://reactjs.org/docs/components-and-props.html)
+- [Babel is a JavaScript compiler](https://babeljs.io)
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Displaying The List
@@ -337,7 +347,8 @@ const RuleList = ({ rules }) => {
   return <Fragment></Fragment>
 }
 ```
-- To create a React list from a JavaScript array, use the map function:
+- To create a React list from a JavaScript array, use the map function: ([Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+)
 ```javascript
 // Array as children
   const newRules = (rules || []).map(rule => {
@@ -360,70 +371,69 @@ const { title, description, likes, dislikes, tags } = rule;
 ```
 - Paste the copied HTML from `resources/rule.html` into the return of `newRules`
 ```javascript
-    return (
-      <div class="panel panel-primary">
-        <div class="panel-heading" role="presentation">
-          Leave the code cleaner than you found it.
-          <i class="pull-right glyphicon glyphicon-chevron-down" />
-        </div>
-        <div class="panel-body">
-          <p>From Clean Code: always leave the code cleaner than it was before.</p>
-        </div>
-        <div class="panel-footer">
-          <div class="btn-toolbar">
-            <span class="badge">craftsmanship</span>
-            <span class="badge">clean code</span>
-            <div class="btn-group btn-group-xs pull-right">
-              <button class="btn btn-primary" title="Update">
-                <i class="glyphicon glyphicon-pencil" />
-              </button>
-            </div>
-            <div class="btn-group btn-group-xs pull-right">
-              <button class="btn btn-default" title="+1">
-                0 <i class="glyphicon glyphicon-thumbs-up" />
-              </button>
-              <button class="btn btn-default" title="-1">
-                0 <i class="glyphicon glyphicon-thumbs-down" />
-              </button>
-            </div>
-          </div>
-        </div>
+return (
+<div class="panel panel-primary">
+  <div class="panel-heading" role="presentation">
+    Leave the code cleaner than you found it.
+    <i class="pull-right glyphicon glyphicon-chevron-down" />
+  </div>
+  <div class="panel-body">
+    <p>From Clean Code: always leave the code cleaner than it was before.</p>
+  </div>
+  <div class="panel-footer">
+    <div class="btn-toolbar">
+      <span class="badge">craftsmanship</span>
+      <span class="badge">clean code</span>
+      <div class="btn-group btn-group-xs pull-right">
+        <button class="btn btn-primary" title="Update">
+          <i class="glyphicon glyphicon-pencil" />
+        </button>
       </div>
-
-    );
+      <div class="btn-group btn-group-xs pull-right">
+        <button class="btn btn-default" title="+1">
+          0 <i class="glyphicon glyphicon-thumbs-up" />
+        </button>
+        <button class="btn btn-default" title="-1">
+          0 <i class="glyphicon glyphicon-thumbs-down" />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+);
 ```
 - Update HTML to JSX syntax (`class` to `className`)
 - Update HTML to be receive dynamic information
 ```javascript
-  return(
-      <div className="panel panel-primary">
-        <div className="panel-heading" role="presentation">
-          {title}
-          <i className="pull-right glyphicon glyphicon-chevron-down"></i>
-        </div>
-        <div className="panel-body">
-          <p>{description}</p>
-        </div>
-        <div className="panel-footer">
-          <div className="btn-toolbar">
-            {newTags}
-            <div className="btn-group btn-group-xs pull-right">
-              <button className="btn btn-primary" title="Update">
-                <i className="glyphicon glyphicon-pencil"></i>
-              </button>
-            </div>
-            <div className="btn-group btn-group-xs pull-right">
-              <button className="btn btn-default" title="+1">
-                {likes} <i className="glyphicon glyphicon-thumbs-up"></i>
-              </button>
-              <button className="btn btn-default" title="-1">
-                {dislikes} <i className="glyphicon glyphicon-thumbs-down"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+return(
+<div className="panel panel-primary">
+  <div className="panel-heading" role="presentation">
+    {title}
+    <i className="pull-right glyphicon glyphicon-chevron-down"></i>
+  </div>
+  <div className="panel-body">
+    <p>{description}</p>
+  </div>
+  <div className="panel-footer">
+    <div className="btn-toolbar">
+      {newTags}
+      <div className="btn-group btn-group-xs pull-right">
+        <button className="btn btn-primary" title="Update">
+          <i className="glyphicon glyphicon-pencil"></i>
+        </button>
       </div>
-  )
+      <div className="btn-group btn-group-xs pull-right">
+        <button className="btn btn-default" title="+1">
+          {likes} <i className="glyphicon glyphicon-thumbs-up"></i>
+        </button>
+        <button className="btn btn-default" title="-1">
+          {dislikes} <i className="glyphicon glyphicon-thumbs-down"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+)
 ```
 - To bootstrap the app, open `src/index.js` and import the new component
 ```javascript
@@ -465,6 +475,11 @@ const newRules = (rules || []).map(rule => (
 ```
 - Check if the application is working well
 
+### References
+- [React.js cheatsheet](https://devhints.io/react)
+- [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) 
+- [React Debugging Guide](https://raygun.com/blog/react-debugging-guide/)
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Custom CSS
@@ -479,16 +494,6 @@ const newRules = (rules || []).map(rule => (
 ```javascript
 import "./Rule.css";
 ```
-
-**[⬆ back to top](#table-of-contents)**
-
-- [Babel is a JavaScript compiler](https://babeljs.io)
-- [Components and Props](https://reactjs.org/docs/components-and-props.html)
-- [Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
-- [React.js cheatsheet](https://devhints.io/react)
-- [Create React App](https://github.com/facebook/create-react-app)
-- [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-- [React Bootstrap](https://react-bootstrap.github.io)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -527,6 +532,14 @@ const toggleFolded = () => setFolded(!folded);
 ```
 - Check if the application is working well
 
+### References
+- [Using the State Hook](https://reactjs.org/docs/hooks-state.html)
+- [React Hooks Cheatsheet](https://react-hooks-cheatsheet.surge.sh)
+- [3 Mistakes Junior Developers Make With React Function Component State](https://medium.com/better-programming/3-mistakes-junior-developers-make-with-react-function-component-state-8a744ab99a0d)
+- [Template literals (Template strings)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
+- [Conditional (ternary) operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)
+- [Falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)
+
 **[⬆ back to top](#table-of-contents)**
 
 ### "likes" feature
@@ -544,7 +557,7 @@ const LikeBtn = ({ type, counter: initialCount }) => {
 ```
 - Create constant for title depending on button type
 ```javascript
-  const title = type === "up" ? "+1" : "-1";
+const title = type === "up" ? "+1" : "-1";
 ```
 - Initialize the default counter state with useState hook.
 ```javascript
@@ -552,16 +565,16 @@ const [counter, setCounter] = useState(initialCount);
 ```
 - Implement return JSX
 ```javascript
-  return (
-    <button className="btn btn-default" title={title}>
-      {counter} <i className={`glyphicon glyphicon-thumbs-${type}`}></i>
-    </button>
-  );
+return (
+  <button className="btn btn-default" title={title}>
+    {counter} <i className={`glyphicon glyphicon-thumbs-${type}`}></i>
+  </button>
+);
 ```
 - Create a method to increment the counter
 ```javascript
 const increment = () => {
-    setCounter(prev => prev + 1);
+  setCounter(prev => prev + 1);
 };
 ```
 - Call increment method when clicking on the button
@@ -580,8 +593,8 @@ const increment = () => {
 
 **[⬆ back to top](#table-of-contents)**
 
-### [Props Validation](https://reactjs.org/docs/typechecking-with-proptypes.html)
-- Install the prop-types module
+### Props Validation
+- Install the prop-types module 
 - In `RuleList.js`, import prop-types module
 ```javascript
 import PropTypes from "prop-types";
@@ -642,14 +655,10 @@ LikeBtn.propTypes = {
 };
 ```
 
-**[⬆ back to top](#table-of-contents)**
-
-- [Using the State Hook](https://reactjs.org/docs/hooks-state.html)
-- [React Hooks Cheatsheet](https://react-hooks-cheatsheet.surge.sh)
-- [Typechecking With PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
-- [Template literals (Template strings)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
-- [Conditional (ternary) operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)
-- [Falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)
+### References
+- [Lifecycles](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram)
+- [From Classes to Hooks](https://reactjs.org/docs/hooks-faq.html#from-classes-to-hooks)
+- [Typechecking with Proptypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -657,7 +666,7 @@ LikeBtn.propTypes = {
 
 ### React Testing Library
 - `create-react-app` is not embed React Testing Library by default
-- Install React Testing Library
+- Install [React Testing Library](https://github.com/testing-library/react-testing-library)
 ```
 npm install --save-dev @testing-library/react @testing-library/jest-dom
 ```
@@ -693,20 +702,20 @@ describe("Rule", () => {
 ```
 - In test suite, create a test case with `test` and a short description
 ```javascript
-  test("should render rule title", () => {
-  });
+test("should render rule title", () => {
+});
 ```
 - Get title element with `getByText`
 ```javascript
-    const titleElement = getByText(rule.title);
+const titleElement = getByText(rule.title);
 ```
 - Add assertion to check the component renders rule title
 ```javascript
-  expect(titleElement).toBeInTheDocument();
+expect(titleElement).toBeInTheDocument();
 ```
 - Add a cleanup function in test suite
 ```javascript
-  afterEach(cleanup);
+afterEach(cleanup);
 ```
 - The test suite should look like this
 ```javascript
@@ -731,6 +740,10 @@ describe("Rule", () => {
 ```javascript
 npm test
 ```
+
+### References
+- [Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet)
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Second test for RuleList component
@@ -756,9 +769,9 @@ test("should display rules titles", () => {
 - Add an assertion to check the component renders all rule titles
 ```javascript
 rules.forEach(rule => {
-      const titleElement = getByText(rule.title);
-      expect(titleElement).toBeInTheDocument();
-    });
+  const titleElement = getByText(rule.title);
+  expect(titleElement).toBeInTheDocument();
+});
 ```
 - Run the tests
 
@@ -783,30 +796,30 @@ describe("LikeBtn", () => {
 - Create a test case with `test` and description
 ```javascript
 test("should increment counter", () => {
-  });
+});
 ```
 - Instantiate the component and check the initial counter to be 0
 ```javascript
-  const likeButtonElement = getByTitle("+1");
-  expect(likeButtonElement).toHaveTextContent("0");
+const likeButtonElement = getByTitle("+1");
+expect(likeButtonElement).toHaveTextContent("0");
 ```
 - In the test case, use `fireEvent` method to simulate a click on the component
 ```javascript
-    fireEvent.click(likeButtonElement);
+fireEvent.click(likeButtonElement);
 ```
 - Check that the counter value has been incremented
 ```javascript
-    expect(likeButtonElement).toHaveTextContent("1");
+expect(likeButtonElement).toHaveTextContent("1");
 ```
 - The final test case should look like this
 ```javascript
 test("should increment counter", () => {
-    const likeButtonElement = getByTitle("+1");
+  const likeButtonElement = getByTitle("+1");
 
-    expect(likeButtonElement).toHaveTextContent("0");
-    fireEvent.click(likeButtonElement);
-    expect(likeButtonElement).toHaveTextContent("1");
-  });
+  expect(likeButtonElement).toHaveTextContent("0");
+  fireEvent.click(likeButtonElement);
+  expect(likeButtonElement).toHaveTextContent("1");
+});
 ```
 
 **[⬆ back to top](#table-of-contents)**
@@ -854,14 +867,14 @@ describe("Rule", () => {
 });
 ```
 
-- [react-testing-library](https://github.com/testing-library/react-testing-library)
-- [Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet)
+### References
 - [React Testing Examples](https://react-testing-examples.com/)
 - [JavaScript End to End Testing Framework](https://www.cypress.io)
 
 **[⬆ back to top](#table-of-contents)**
 
 ## **Redux**
+- [Redux](https://redux.js.org/)
 
 ### Load Rules
 - For the sake of separation of concerns, we will load the rules in a dedicated action instead of importing them in `index.js`
@@ -914,6 +927,8 @@ describe("Rules Actions", () => {
   });
 });
 ```
+### References
+- [Actions](https://redux.js.org/basics/actions)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -933,17 +948,17 @@ const rulesReducer = (state = [], action) => {
 - Write a switch statement and return state by default
 ```javascript
 switch (action.type) {
-    default:
-      return state;
+  default:
+    return state;
 }
 ```
 - Handle the RULES_LOADED action by saving the rules from the RULES_LOADED action into the state
 ```javascript
 switch (action.type) {
-    case RULES_LOADED: {
-      return action.payload;
-    }
-    ...
+  case RULES_LOADED: {
+    return action.payload;
+  }
+  ...
 }
 ```
 - Export the reducer
@@ -979,6 +994,8 @@ describe("Rules reducer", () => {
   });
 }); 
 ```
+### References
+  - [Reducers](https://redux.js.org/basics/reducers)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1036,6 +1053,8 @@ const store = createStore(
   )
 );
 ```
+### References
+- [Store](https://redux.js.org/basics/store)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1046,7 +1065,7 @@ import { useSelector, useDispatch } from "react-redux";
 ```
 - Use `useSelector` to retrieve all rules in the store
 ```javascript
-  const rules = useSelector(state => state.rules)
+const rules = useSelector(state => state.rules)
 ```
 - Declare a constant with `useDispatch`
 ```javascript
@@ -1056,9 +1075,9 @@ const dispatch = useDispatch()
 ```javascript
 import { loadRules } from "./actions/rules-actions";
 
-  useEffect(() => {
-    dispatch(loadRules());
-  }, []);
+useEffect(() => {
+  dispatch(loadRules());
+}, []);
 ```
 - In `index.js`, provide the store to the application with the Provider component
 ```javascript
@@ -1071,6 +1090,8 @@ const reactElement = (
   </Provider>
 );
 ```
+### References
+- [Using the Effect Hook](https://reactjs.org/docs/hooks-effect.html)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1084,9 +1105,9 @@ const doLike = id => {
 - Return an action named `DO_LIKE` , containing the rule identifier
 ```javascript
 return {
-    type: DO_LIKE,
-    payload: id
-  };
+  type: DO_LIKE,
+  payload: id
+};
 ```
 - Export the function
 ```javascript
@@ -1138,17 +1159,18 @@ const index = state.findIndex(rule => rule.id === action.payload);
 - In the same file, handle `DO_DISLIKE`, just like `DO_LIKE`
 - The case should look like this:
 ```javascript
-  case DO_DISLIKE: {
-    const index = state.findIndex(rule => rule.id === action.payload);
-    const newRule = {
-      ...state[index]
-    };
-    newRule.dislikes += 1;
-    const newRules = [...state];
-    newRules[index] = newRule;
-    return newRules;
-  }
+case DO_DISLIKE: {
+  const index = state.findIndex(rule => rule.id === action.payload);
+  const newRule = {
+    ...state[index]
+  };
+  newRule.dislikes += 1;
+  const newRules = [...state];
+  newRules[index] = newRule;
+  return newRules;
+}
 ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Likes and Dislikes Update React Component
@@ -1211,15 +1233,10 @@ const LikeBtn = ({ type, ruleID }) => {
 ```
 - Check that application works well
 
-**[⬆ back to top](#table-of-contents)**
-
-### Redux Cycle:
-
-![Redux Cycle](https://github.com/chesterheng/react-training/blob/master/concepts/27-8-19%2C%201_01%20PM%20Office%20Lens.jpeg)
-
-### React Redux:
-
-![React Redux](https://github.com/chesterheng/react-training/blob/master/concepts/IMG_7610.JPG)
+### References
+- [Redux DevTools Extension](http://extension.remotedev.io)
+- [Logger for Redux](https://github.com/LogRocket/redux-logger)
+- [The best way to architect your Redux app](https://www.freecodecamp.org/news/the-best-way-to-architect-your-redux-app-ad9bd16c8e2d)
 
 ```javascript
 // Array-based state
@@ -1279,14 +1296,15 @@ const rulesReducer = (state={}, action) => {
 }
 ```
 
-- [Redux](https://redux.js.org/)
-- [Actions](https://redux.js.org/basics/actions)
-- [Reducers](https://redux.js.org/basics/reducers)
-- [Store](https://redux.js.org/basics/store)
-- [Redux DevTools Extension](http://extension.remotedev.io)
-- [Logger for Redux](https://github.com/LogRocket/redux-logger)
-- [The best way to architect your Redux app](https://www.freecodecamp.org/news/the-best-way-to-architect-your-redux-app-ad9bd16c8e2d)
+**[⬆ back to top](#table-of-contents)**
 
+### Redux Cycle:
+
+![Redux Cycle](https://github.com/chesterheng/react-training/blob/master/concepts/27-8-19%2C%201_01%20PM%20Office%20Lens.jpeg)
+
+### React Redux:
+
+![React Redux](https://github.com/chesterheng/react-training/blob/master/concepts/IMG_7610.JPG)
 **[⬆ back to top](#table-of-contents)**
 
 ## **REST Architecture**
@@ -1307,6 +1325,7 @@ npm install
 npm start
 ```
 - To proxify requests to a particular host and prevent cross-origin (CORS) errors when calling the backend, install `http-proxy-middleware`
+- Refer to official react documentation [here](https://create-react-app.dev/docs/proxying-api-requests-in-development/)
 ```javascript
 npm install http-proxy-middleware --save-dev
 ```
@@ -1349,6 +1368,10 @@ compose(
 ```javascript
 npm install axios
 ``` 
+
+### References
+- [Redux Thunk](https://github.com/reduxjs/redux-thunk)
+- [Axios](https://github.com/axios/axios)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1403,6 +1426,10 @@ export const loadRules = () => async dispatch => {
 ```
 - Check that the application is working well
 
+### References / tools
+- [Postman](https://www.postman.com/downloads/)
+- [Getting Started with Postman](https://learning.postman.com/docs/getting-started/sending-the-first-request/)
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Handle Likes & Dislikes
@@ -1453,11 +1480,7 @@ export const doDislike = id => async dispatch => {
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ### Update Backend DB and Frontend Redux Store:
-
-![Update Backend DB and Frontend Redux Store](https://github.com/chesterheng/react-training/blob/master/concepts/IMG_7614.JPG)
-
 ```javascript
 // Async action creator
 import axios from "axios";
@@ -1528,10 +1551,7 @@ export default connect(
 )(RuleList);
 ```
 
-- [Proxying API Requests in Development](https://create-react-app.dev/docs/proxying-api-requests-in-development)
-- [Redux Thunk](https://github.com/reduxjs/redux-thunk)
-- [Axios](https://github.com/axios/axios)
-- [Using the Effect Hook](https://reactjs.org/docs/hooks-effect.html)
+### References
 - [REST API Tutorial](https://restfulapi.net)
 
 **[⬆ back to top](#table-of-contents)**
@@ -1559,6 +1579,9 @@ import { BrowserRouter, Route } from "react-router-dom";
 ```
 - Check that the application is still working
 
+### References
+- [Redux Router](https://reacttraining.com/react-router/web/guides/quick-start)
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Navigation Bar
@@ -1580,30 +1603,30 @@ import { Link } from "react-router-dom";
 - Replace links (<a> tag) with the Link component
 ```javascript
 return (
-    <nav className="navbar navbar-default">
-      <div className="navbar-header">
-        <button type="button" className="navbar-toggle">
-          <span className="sr-only">Toggle navigation</span>
-          <span className="icon-bar" />
-          <span className="icon-bar" />
-          <span className="icon-bar" />
-        </button>
-        <Link to="/" className="navbar-brand brand">
-          Developers rules
-        </Link>
-      </div>
-      <div className="collapse navbar-collapse">
-        <ul className="nav navbar-nav">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/new">New</Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  );
+  <nav className="navbar navbar-default">
+    <div className="navbar-header">
+      <button type="button" className="navbar-toggle">
+        <span className="sr-only">Toggle navigation</span>
+        <span className="icon-bar" />
+        <span className="icon-bar" />
+        <span className="icon-bar" />
+      </button>
+      <Link to="/" className="navbar-brand brand">
+        Developers rules
+      </Link>
+    </div>
+    <div className="collapse navbar-collapse">
+      <ul className="nav navbar-nav">
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/new">New</Link>
+        </li>
+      </ul>
+    </div>
+  </nav>
+);
 ```
 - To create application layout, create a new file `Layout.js`
 - Create and export a new function called `Layout`
@@ -1742,10 +1765,6 @@ const { title = "", description = "" } = rule || {};
 
 **[⬆ back to top](#table-of-contents)**
 
-- [Redux Router](https://reacttraining.com/react-router/web/guides/quick-start)
-
-**[⬆ back to top](#table-of-contents)**
-
 ## **Forms**
 
 ### Formik
@@ -1753,6 +1772,8 @@ const { title = "", description = "" } = rule || {};
 ```javascript
 npm install formik
 ```
+### References
+- [Formik](https://github.com/jaredpalmer/formik)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1915,6 +1936,9 @@ const isObjectEmpty = obj => !Object.entries(obj).length;
 ```
 - Try to trigger the errors to check that the validation is working
 
+### References
+- [Yup](https://github.com/jquense/yup)
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Submission
@@ -2025,7 +2049,6 @@ case RULES_UPDATED: {
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ```javascript
 // React form
 import React, { Fragment } from "react";
@@ -2119,8 +2142,6 @@ const RuleForm = ({ rule }) => {
 export default App;
 ```
 
-- [Formik](https://github.com/jaredpalmer/formik)
-- [Yup](https://github.com/jquense/yup)
 
 **[⬆ back to top](#table-of-contents)**
 
