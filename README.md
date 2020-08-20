@@ -230,6 +230,9 @@ npm start
 - Open the browser at http://localhost:3000 URL, you should see a welcome message and a spinning React logo.
 - To see the hot-reload in action, open the `App.js` file and change one of the text string, the text is updated in the browser immediately, without manual refresh.
 
+References
+  - [Create React App](https://github.com/facebook/create-react-app)
+
 **[⬆ back to top](#table-of-contents)**
 
 ## **React and JSX setup**
@@ -254,6 +257,8 @@ npm install bootstrap@3.x.x --save
 ```javascript
 import 'bootstrap/dist/css/bootstrap.css';
 ```
+References 
+  - [React Bootstrap](https://react-bootstrap.github.io)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -302,6 +307,10 @@ const Rule = ({ title }) => {
 };
 ```
 
+References
+  - [Components and Props](https://reactjs.org/docs/components-and-props.html)
+  - [Babel is a JavaScript compiler](https://babeljs.io)
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Displaying The List
@@ -337,7 +346,8 @@ const RuleList = ({ rules }) => {
   return <Fragment></Fragment>
 }
 ```
-- To create a React list from a JavaScript array, use the map function:
+- To create a React list from a JavaScript array, use the map function: ([Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+)
 ```javascript
 // Array as children
   const newRules = (rules || []).map(rule => {
@@ -465,6 +475,11 @@ const newRules = (rules || []).map(rule => (
 ```
 - Check if the application is working well
 
+References
+  - [React.js cheatsheet](https://devhints.io/react)
+  - [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) 
+  - [React Debugging Guide](https://raygun.com/blog/react-debugging-guide/)
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Custom CSS
@@ -482,16 +497,6 @@ import "./Rule.css";
 
 **[⬆ back to top](#table-of-contents)**
 
-- [Babel is a JavaScript compiler](https://babeljs.io)
-- [Components and Props](https://reactjs.org/docs/components-and-props.html)
-- [Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
-- [React.js cheatsheet](https://devhints.io/react)
-- [Create React App](https://github.com/facebook/create-react-app)
-- [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-- [React Bootstrap](https://react-bootstrap.github.io)
-
-**[⬆ back to top](#table-of-contents)**
-
 ## **State**
 
 ### Handle Component State
@@ -503,7 +508,7 @@ import React, { useState } from "react";
 ```javascript
 const [folded, setFolded] = useState(!description); 
 ```
-- Display or hide the description using the hidden CSS class depending on the folded value
+- Display or hide the description using the hidden CSS class depending on the folded value, using 
 ```javascript
 <div className={`panel-body ${folded ? "hidden" : ""}`}>
 ...
@@ -526,6 +531,14 @@ const toggleFolded = () => setFolded(!folded);
 </div>
 ```
 - Check if the application is working well
+
+References
+  - [Using the State Hook](https://reactjs.org/docs/hooks-state.html)
+  - [React Hooks Cheatsheet](https://react-hooks-cheatsheet.surge.sh)
+  - [3 Mistakes Junior Developers Make With React Function Component State](https://medium.com/better-programming/3-mistakes-junior-developers-make-with-react-function-component-state-8a744ab99a0d)
+  - [Template literals (Template strings)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
+  - [Conditional (ternary) operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)
+  - [Falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -580,8 +593,8 @@ const increment = () => {
 
 **[⬆ back to top](#table-of-contents)**
 
-### [Props Validation](https://reactjs.org/docs/typechecking-with-proptypes.html)
-- Install the prop-types module
+### [Props Validation]
+- Install the prop-types module 
 - In `RuleList.js`, import prop-types module
 ```javascript
 import PropTypes from "prop-types";
@@ -641,15 +654,9 @@ LikeBtn.propTypes = {
   counter: PropTypes.number
 };
 ```
+References
+  - [Typechecking with Proptypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
 
-**[⬆ back to top](#table-of-contents)**
-
-- [Using the State Hook](https://reactjs.org/docs/hooks-state.html)
-- [React Hooks Cheatsheet](https://react-hooks-cheatsheet.surge.sh)
-- [Typechecking With PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
-- [Template literals (Template strings)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
-- [Conditional (ternary) operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)
-- [Falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -657,7 +664,7 @@ LikeBtn.propTypes = {
 
 ### React Testing Library
 - `create-react-app` is not embed React Testing Library by default
-- Install React Testing Library
+- Install [React Testing Library](https://github.com/testing-library/react-testing-library)
 ```
 npm install --save-dev @testing-library/react @testing-library/jest-dom
 ```
@@ -731,6 +738,9 @@ describe("Rule", () => {
 ```javascript
 npm test
 ```
+References 
+  - [Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet)
+
 **[⬆ back to top](#table-of-contents)**
 
 ### Second test for RuleList component
@@ -854,14 +864,14 @@ describe("Rule", () => {
 });
 ```
 
-- [react-testing-library](https://github.com/testing-library/react-testing-library)
-- [Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet)
-- [React Testing Examples](https://react-testing-examples.com/)
-- [JavaScript End to End Testing Framework](https://www.cypress.io)
+References
+  - [React Testing Examples](https://react-testing-examples.com/)
+  - [JavaScript End to End Testing Framework](https://www.cypress.io)
 
 **[⬆ back to top](#table-of-contents)**
 
 ## **Redux**
+- [Redux](https://redux.js.org/)
 
 ### Load Rules
 - For the sake of separation of concerns, we will load the rules in a dedicated action instead of importing them in `index.js`
@@ -914,6 +924,8 @@ describe("Rules Actions", () => {
   });
 });
 ```
+References
+  - [Actions](https://redux.js.org/basics/actions)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -979,6 +991,8 @@ describe("Rules reducer", () => {
   });
 }); 
 ```
+References
+  - [Reducers](https://redux.js.org/basics/reducers)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1036,6 +1050,8 @@ const store = createStore(
   )
 );
 ```
+References
+  - [Store](https://redux.js.org/basics/store)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1071,6 +1087,8 @@ const reactElement = (
   </Provider>
 );
 ```
+References
+  - [Using the Effect Hook](https://reactjs.org/docs/hooks-effect.html)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1211,15 +1229,10 @@ const LikeBtn = ({ type, ruleID }) => {
 ```
 - Check that application works well
 
-**[⬆ back to top](#table-of-contents)**
-
-### Redux Cycle:
-
-![Redux Cycle](https://github.com/chesterheng/react-training/blob/master/concepts/27-8-19%2C%201_01%20PM%20Office%20Lens.jpeg)
-
-### React Redux:
-
-![React Redux](https://github.com/chesterheng/react-training/blob/master/concepts/IMG_7610.JPG)
+References
+  - [Redux DevTools Extension](http://extension.remotedev.io)
+  - [Logger for Redux](https://github.com/LogRocket/redux-logger)
+  - [The best way to architect your Redux app](https://www.freecodecamp.org/news/the-best-way-to-architect-your-redux-app-ad9bd16c8e2d)
 
 ```javascript
 // Array-based state
@@ -1279,14 +1292,15 @@ const rulesReducer = (state={}, action) => {
 }
 ```
 
-- [Redux](https://redux.js.org/)
-- [Actions](https://redux.js.org/basics/actions)
-- [Reducers](https://redux.js.org/basics/reducers)
-- [Store](https://redux.js.org/basics/store)
-- [Redux DevTools Extension](http://extension.remotedev.io)
-- [Logger for Redux](https://github.com/LogRocket/redux-logger)
-- [The best way to architect your Redux app](https://www.freecodecamp.org/news/the-best-way-to-architect-your-redux-app-ad9bd16c8e2d)
+**[⬆ back to top](#table-of-contents)**
 
+### Redux Cycle:
+
+![Redux Cycle](https://github.com/chesterheng/react-training/blob/master/concepts/27-8-19%2C%201_01%20PM%20Office%20Lens.jpeg)
+
+### React Redux:
+
+![React Redux](https://github.com/chesterheng/react-training/blob/master/concepts/IMG_7610.JPG)
 **[⬆ back to top](#table-of-contents)**
 
 ## **REST Architecture**
@@ -1307,6 +1321,7 @@ npm install
 npm start
 ```
 - To proxify requests to a particular host and prevent cross-origin (CORS) errors when calling the backend, install `http-proxy-middleware`
+- Refer to official react documentation [here](https://create-react-app.dev/docs/proxying-api-requests-in-development/)
 ```javascript
 npm install http-proxy-middleware --save-dev
 ```
@@ -1349,6 +1364,9 @@ compose(
 ```javascript
 npm install axios
 ``` 
+References
+  - [Redux Thunk](https://github.com/reduxjs/redux-thunk)
+  - [Axios](https://github.com/axios/axios)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1402,6 +1420,10 @@ export const loadRules = () => async dispatch => {
   }
 ```
 - Check that the application is working well
+
+References / tools
+  - [Postman](https://www.postman.com/downloads/)
+  - [Getting Started with Postman](https://learning.postman.com/docs/getting-started/sending-the-first-request/)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1527,12 +1549,8 @@ export default connect(
   mapDispatchToProps
 )(RuleList);
 ```
-
-- [Proxying API Requests in Development](https://create-react-app.dev/docs/proxying-api-requests-in-development)
-- [Redux Thunk](https://github.com/reduxjs/redux-thunk)
-- [Axios](https://github.com/axios/axios)
-- [Using the Effect Hook](https://reactjs.org/docs/hooks-effect.html)
-- [REST API Tutorial](https://restfulapi.net)
+References
+  - [REST API Tutorial](https://restfulapi.net)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1558,6 +1576,9 @@ import { BrowserRouter, Route } from "react-router-dom";
 </BrowserRouter>
 ```
 - Check that the application is still working
+
+References
+  - [Redux Router](https://reacttraining.com/react-router/web/guides/quick-start)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1742,10 +1763,6 @@ const { title = "", description = "" } = rule || {};
 
 **[⬆ back to top](#table-of-contents)**
 
-- [Redux Router](https://reacttraining.com/react-router/web/guides/quick-start)
-
-**[⬆ back to top](#table-of-contents)**
-
 ## **Forms**
 
 ### Formik
@@ -1753,6 +1770,8 @@ const { title = "", description = "" } = rule || {};
 ```javascript
 npm install formik
 ```
+References
+  - [Formik](https://github.com/jaredpalmer/formik)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -1914,6 +1933,9 @@ const isObjectEmpty = obj => !Object.entries(obj).length;
 ...
 ```
 - Try to trigger the errors to check that the validation is working
+
+References
+  - [Yup](https://github.com/jquense/yup)
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -2119,8 +2141,6 @@ const RuleForm = ({ rule }) => {
 export default App;
 ```
 
-- [Formik](https://github.com/jaredpalmer/formik)
-- [Yup](https://github.com/jquense/yup)
 
 **[⬆ back to top](#table-of-contents)**
 
