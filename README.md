@@ -230,7 +230,7 @@ npm start
 - Open the browser at http://localhost:3000 URL, you should see a welcome message and a spinning React logo.
 - To see the hot-reload in action, open the `App.js` file and change one of the text string, the text is updated in the browser immediately, without manual refresh.
 
-References
+### References
   - [Create React App](https://github.com/facebook/create-react-app)
 
 **[⬆ back to top](#table-of-contents)**
@@ -257,7 +257,7 @@ npm install bootstrap@3.x.x --save
 ```javascript
 import 'bootstrap/dist/css/bootstrap.css';
 ```
-References 
+### References 
   - [React Bootstrap](https://react-bootstrap.github.io)
 
 **[⬆ back to top](#table-of-contents)**
@@ -307,7 +307,7 @@ const Rule = ({ title }) => {
 };
 ```
 
-References
+### References
   - [Components and Props](https://reactjs.org/docs/components-and-props.html)
   - [Babel is a JavaScript compiler](https://babeljs.io)
 
@@ -475,7 +475,7 @@ const newRules = (rules || []).map(rule => (
 ```
 - Check if the application is working well
 
-References
+### References
   - [React.js cheatsheet](https://devhints.io/react)
   - [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) 
   - [React Debugging Guide](https://raygun.com/blog/react-debugging-guide/)
@@ -508,7 +508,7 @@ import React, { useState } from "react";
 ```javascript
 const [folded, setFolded] = useState(!description); 
 ```
-- Display or hide the description using the hidden CSS class depending on the folded value, using 
+- Display or hide the description using the hidden CSS class depending on the folded value
 ```javascript
 <div className={`panel-body ${folded ? "hidden" : ""}`}>
 ...
@@ -532,7 +532,7 @@ const toggleFolded = () => setFolded(!folded);
 ```
 - Check if the application is working well
 
-References
+### References
   - [Using the State Hook](https://reactjs.org/docs/hooks-state.html)
   - [React Hooks Cheatsheet](https://react-hooks-cheatsheet.surge.sh)
   - [3 Mistakes Junior Developers Make With React Function Component State](https://medium.com/better-programming/3-mistakes-junior-developers-make-with-react-function-component-state-8a744ab99a0d)
@@ -654,7 +654,7 @@ LikeBtn.propTypes = {
   counter: PropTypes.number
 };
 ```
-References
+### References
   - [Typechecking with Proptypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
 
 
@@ -738,7 +738,7 @@ describe("Rule", () => {
 ```javascript
 npm test
 ```
-References 
+### References 
   - [Cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet)
 
 **[⬆ back to top](#table-of-contents)**
@@ -864,7 +864,7 @@ describe("Rule", () => {
 });
 ```
 
-References
+### References
   - [React Testing Examples](https://react-testing-examples.com/)
   - [JavaScript End to End Testing Framework](https://www.cypress.io)
 
@@ -924,7 +924,7 @@ describe("Rules Actions", () => {
   });
 });
 ```
-References
+### References
   - [Actions](https://redux.js.org/basics/actions)
 
 **[⬆ back to top](#table-of-contents)**
@@ -991,7 +991,7 @@ describe("Rules reducer", () => {
   });
 }); 
 ```
-References
+### References
   - [Reducers](https://redux.js.org/basics/reducers)
 
 **[⬆ back to top](#table-of-contents)**
@@ -1050,7 +1050,7 @@ const store = createStore(
   )
 );
 ```
-References
+### References
   - [Store](https://redux.js.org/basics/store)
 
 **[⬆ back to top](#table-of-contents)**
@@ -1087,7 +1087,7 @@ const reactElement = (
   </Provider>
 );
 ```
-References
+### References
   - [Using the Effect Hook](https://reactjs.org/docs/hooks-effect.html)
 
 **[⬆ back to top](#table-of-contents)**
@@ -1229,7 +1229,7 @@ const LikeBtn = ({ type, ruleID }) => {
 ```
 - Check that application works well
 
-References
+### References
   - [Redux DevTools Extension](http://extension.remotedev.io)
   - [Logger for Redux](https://github.com/LogRocket/redux-logger)
   - [The best way to architect your Redux app](https://www.freecodecamp.org/news/the-best-way-to-architect-your-redux-app-ad9bd16c8e2d)
@@ -1364,7 +1364,7 @@ compose(
 ```javascript
 npm install axios
 ``` 
-References
+### References
   - [Redux Thunk](https://github.com/reduxjs/redux-thunk)
   - [Axios](https://github.com/axios/axios)
 
@@ -1421,7 +1421,7 @@ export const loadRules = () => async dispatch => {
 ```
 - Check that the application is working well
 
-References / tools
+### References / tools
   - [Postman](https://www.postman.com/downloads/)
   - [Getting Started with Postman](https://learning.postman.com/docs/getting-started/sending-the-first-request/)
 
@@ -1549,7 +1549,7 @@ export default connect(
   mapDispatchToProps
 )(RuleList);
 ```
-References
+### References
   - [REST API Tutorial](https://restfulapi.net)
 
 **[⬆ back to top](#table-of-contents)**
@@ -1577,7 +1577,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 ```
 - Check that the application is still working
 
-References
+### References
   - [Redux Router](https://reacttraining.com/react-router/web/guides/quick-start)
 
 **[⬆ back to top](#table-of-contents)**
@@ -1770,7 +1770,7 @@ const { title = "", description = "" } = rule || {};
 ```javascript
 npm install formik
 ```
-References
+### References
   - [Formik](https://github.com/jaredpalmer/formik)
 
 **[⬆ back to top](#table-of-contents)**
@@ -1934,7 +1934,7 @@ const isObjectEmpty = obj => !Object.entries(obj).length;
 ```
 - Try to trigger the errors to check that the validation is working
 
-References
+### References
   - [Yup](https://github.com/jquense/yup)
 
 **[⬆ back to top](#table-of-contents)**
