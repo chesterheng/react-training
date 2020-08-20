@@ -1085,7 +1085,7 @@ const doLike = id => {
 ```javascript
 return {
     type: DO_LIKE,
-    payload: rules
+    payload: id
   };
 ```
 - Export the function
