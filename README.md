@@ -1936,6 +1936,9 @@ const isObjectEmpty = obj => !Object.entries(obj).length;
 ```
 - Try to trigger the errors to check that the validation is working
 
+References
+- [How is isDirty Calculated](https://github.com/formium/formik/issues/954)
+
 ### References
 - [Yup](https://github.com/jquense/yup)
 
