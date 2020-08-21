@@ -17,7 +17,7 @@ const RuleTitleField = ({ field, form }) => {
         id="rule-title"
         placeholder="Title"
       />
-      <ErrorMessage component="span" className="help-block" name="title" />
+      <ErrorMessage component="span" className="help-block" name={name} />
     </div>
   );
 };

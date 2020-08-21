@@ -19,7 +19,7 @@ const RuleDescriptionField = ({ field, form }) => {
       <ErrorMessage
         component="span"
         className="help-block"
-        name="description"
+        name={name}
       />
     </div>
   );

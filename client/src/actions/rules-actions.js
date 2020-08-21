@@ -16,11 +16,10 @@ export const loadRules = () => async dispatch => {
 export const RULES_ADDED = "RULES_ADDED";
 export const addRule = (rule, history) => async dispatch => {
   try {
-    const response = await axios.post("/rest/rules", rule);
-    console.log(response)
+    const { data } = await axios.post("/rest/rules", rule);
     dispatch({
       type: RULES_ADDED,
-      payload: response.data
+      payload: data
     });
   } catch (error) {
     console.log(error);
