@@ -77,6 +77,7 @@
     - [Navigation Bar](#navigation-bar)
     - [Navigate to Rule Creation Page](#navigate-to-rule-creation-page)
     - [Navigate to Rules Modification Page](#navigate-to-rules-modification-page)
+    - [Bonus: 404 Page](#bonus-404-page)
     
     </details>
 9.  [Forms](#forms)
@@ -1764,6 +1765,37 @@ const { title = "", description = "" } = rule || {};
 - Check that the application is working well
 
 **[⬆ back to top](#table-of-contents)**
+
+### Bonus: 404 Page
+- Create a new file `NotFound.js`
+- In this file, create a function Rule and export it by default
+- Implement the return JSX
+```javascript
+const NotFound = () => {
+  return (
+    <div>
+      404 Page Not Found.
+    </div>
+  );
+};
+```
+- In `Layout.js`, import `Switch` from react-router-dom
+```javascript
+import { Switch } from "react-router-dom"
+```
+- Wrap all Route components with the [Switch](https://reactrouter.com/core/api/Switch) component
+```javascript
+<Switch>
+  <Route exact path="/" component={RuleList} />
+  <Route path="/new" component={RuleForm} />
+  <Route path="/edit/:id" component={RuleForm} />
+</Switch>
+```
+- To implement the 404 page, create a new route that renders `NotFound`. You do not have to pass in a path
+```javascript
+<Route path="/edit/:id" component={NotFound} />
+```
+- Check that the application is working well
 
 ## **Forms**
 
