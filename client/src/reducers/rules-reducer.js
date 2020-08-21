@@ -16,7 +16,7 @@ const rulesReducer = (state = [], action) => {
     }
 
     case RULES_UPDATED: {
-      const index = state.find(rule => rule.id === action.payload.id);
+      const index = state.findIndex(rule => rule.id === action.payload.id);
       const newRules = [...state];
       newRules[index] = action.payload;
       return newRules;

@@ -113,6 +113,7 @@
 ## **JavaScript**
 - [Can I use](https://caniuse.com)
 - [RunJS - Write and run JavaScript instantly](https://runjs.dev)
+- [Top 35 JavaScript Shorthands for Beginners](https://morioh.com/p/05414714e685)
 
 ```javascript
 // ES6 Modules - export
@@ -1967,6 +1968,9 @@ const isObjectEmpty = obj => !Object.entries(obj).length;
 ...
 ```
 - Try to trigger the errors to check that the validation is working
+
+References
+- [How is isDirty Calculated](https://github.com/formium/formik/issues/954)
 
 ### References
 - [Yup](https://github.com/jquense/yup)
